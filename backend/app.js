@@ -6,11 +6,19 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 const path = require('path');
-const app = express();
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const redoc = require('redoc-express');
 const multer = require('multer');
+const express = require("express");
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+app.get("/", (req, res) => {
+  res.send("Backend Render OK !");
+});
+
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 // Configuration de Multer pour le stockage des fichiers
 const storage = multer.diskStorage({
