@@ -10,7 +10,6 @@ const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const redoc = require('redoc-express');
 const multer = require('multer');
-const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
