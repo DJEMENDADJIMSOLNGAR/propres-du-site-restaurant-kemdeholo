@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article - KemdeHolo</title>    <link href="style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .prose {
+            color: #374151;
+        }
+        .prose h1, .prose h2, .prose h3 {
+            color: #030303; /* black */
+        }
+        .prose a {
+            color: #c32e27;
+        }
+        .prose blockquote {
+            border-left-color: #C00000;
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-100">
+    <!-- Header Placeholder -->
+    <div id="header-placeholder"></div>
+
+    <!-- Contenu de l'article -->
+    <main id="article-container" class="container mx-auto px-4 py-12 max-w-4xl scroll-reveal">
+        <!-- Le contenu de l'article sera injecté ici -->
+        <p class="text-center text-gray-500">Chargement de l'article...</p>
+    </main>
+
+    <!-- Section Commentaires -->
+    <section id="comments-section" class=" py-12 scroll-reveal">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <div id="comment-form-container" class="mb-12">
+                <h2 class="text-2xl font-bold text-primary-blue mb-6">Laissez un commentaire</h2>
+                <form id="comment-form">
+                    <input type="hidden" id="parentId" value="">
+                    <div class="mb-4">
+                        <label for="comment-name" class="block text-gray-700 font-semibold mb-2">Votre nom</label>
+                        <input type="text" id="comment-name" required class="w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-primary-blue focus:ring-primary-blue">
+                    </div>
+                    <div class="mb-4">
+                        <label for="comment-text" class="block text-gray-700 font-semibold mb-2">Votre commentaire</label>
+                        <textarea id="comment-text" rows="4" required class="w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-primary-blue focus:ring-primary-blue"></textarea>
+                    </div>
+                    <button type="submit" class="bg-primary-blue hover:bg-blue-800 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-300">
+                        Soumettre le commentaire
+                    </button>
+                    <button type="button" id="cancel-reply-btn" class="hidden ml-2 text-gray-600 hover:text-gray-900">Annuler la réponse</button>
+                    <div id="comment-message" class="mt-4"></div>
+                </form>
+            </div>
+
+            <h3 class="text-2xl font-bold text-black mb-6">Commentaires</h3>
+            <div id="comments-list" class="space-y-6">
+                <!-- Les commentaires seront injectés ici -->
+                <p class="text-gray-500">Aucun commentaire pour le moment.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Placeholder -->
+    <footer id="main-footer" class="bg-primary-blue text-white py-12 px-4"></footer>
+
+    <script src="main.js"></script> 
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const commentFormContainer = document.getElementById('comment-form-container');
+            const commentForm = document.getElementById('comment-form');
+            const parentIdInput = document.getElementById('parentId');
+            const cancelReplyBtn = document.getElementById('cancel-reply-btn');
+
+            const params = new URLSearchParams(window.location.search);
+            const articleId = params.get('id');
+
+            if (!articleId) {
+                document.getElementById('article-container').innerHTML = '<p class="text-center text-red-500">Aucun article spécifié.</p>';
+                return;
+            }
+
+            function renderComments(comments, container, isReply = false) {
+                container.innerHTML = '';
+                if (!comments || comments.length === 0) {
+                    if (!isReply) {
+                        container.innerHTML = '<p class="text-gray-500">Soyez le premier à commenter !</p>';
+                    }
+                    return;
+                }
+
+                comments.forEach(comment => {
+                    const commentDiv = document.createElement('div');
+                    commentDiv.className = `border-b border-gray-200 pb-6 ${isReply ? 'ml-8 lg:ml-12' : ''}`;
+                    commentDiv.innerHTML = `
+                        <div id="comment-${comment.id}">
+                            <p class="font-bold text-black">${comment.name}</p>
+                            <p class="text-sm text-gray-500 mb-2">${new Date(comment.date).toLocaleString('fr-FR')}</p>
+                            <p class="text-gray-700 mb-2">${comment.text}</p>
+                            <button class="reply-btn text-sm text-red-600 font-semibold" data-comment-id="${comment.id}">Répondre</button>
+                        </div>
+                    `;
+                    const repliesContainer = document.createElement('div');
+                    commentDiv.appendChild(repliesContainer);
+                    container.appendChild(commentDiv);
+                    renderComments(comment.replies, repliesContainer, true);
+                });
+            }
+
+            async function loadArticleAndComments() {
+                try {
+                    const response = await fetch(`/api/articles/${articleId}`);
+                    if (!response.ok) throw new Error('Article non trouvé');
+                    
+                    const article = await response.json();
+
+                    // Afficher l'article
+                    const articleContainer = document.getElementById('article-container');
+                    document.title = `${article.titre} - KemdeHolo`;
+                    articleContainer.innerHTML = `
+                        <article class="prose lg:prose-xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+                            <div class="text-sm text-gray-500 mb-4">
+                                <span class="font-semibold text-black">${article.categorie || 'Non classé'}</span>
+                                <span class="mx-2">|</span>
+                                <span>${new Date(article.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+                            </div>
+                            <h1>${article.titre}</h1>
+                            ${article.image ? `<img src="/${article.image}" alt="${article.titre}" class="w-full rounded-lg mb-8">` : ''}
+                            <div>${article.contenu.replace(/\n/g, '<br>')}</div>
+                        </article>
+                    `;
+
+                    // Afficher les commentaires
+                    const commentsList = document.getElementById('comments-list');
+                    renderComments(article.Comments, commentsList);
+
+                } catch (error) {
+                    document.getElementById('article-container').innerHTML = `<p class="text-center text-red-500">${error.message}</p>`;
+                }
+            }
+
+            // Gérer la soumission du formulaire de commentaire
+            commentForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const name = document.getElementById('comment-name').value;
+                const text = document.getElementById('comment-text').value;
+                const parentId = parentIdInput.value;
+                const messageDiv = document.getElementById('comment-message');
+
+                const body = { name, text, blogId: articleId, parentId: parentId || null };
+
+                try {
+                    const response = await fetch('/api/comments', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(body)
+                    });
+                    const result = await response.json();
+
+                    if (!response.ok) throw new Error(result.error || 'Une erreur est survenue.');
+
+                    messageDiv.textContent = 'Votre commentaire a été soumis avec succès !';
+                    messageDiv.className = 'text-green-600';
+                    commentForm.reset();
+                    parentIdInput.value = '';
+                    cancelReplyBtn.click();
+                    loadArticleAndComments(); // Recharger les commentaires
+                } catch (error) {
+                    messageDiv.textContent = `Erreur: ${error.message}`;
+                    messageDiv.className = 'text-red-600';
+                }
+            });
+
+            // Gérer le clic sur "Répondre"
+            document.getElementById('comments-list').addEventListener('click', (e) => {
+                if (e.target.classList.contains('reply-btn')) {
+                    const commentId = e.target.dataset.commentId;
+                    parentIdInput.value = commentId;
+                    
+                    const targetCommentDiv = document.getElementById(`comment-${commentId}`);
+                    targetCommentDiv.appendChild(commentFormContainer);
+
+                    cancelReplyBtn.classList.remove('hidden');
+                    document.getElementById('comment-text').focus();
+                }
+            });
+
+            cancelReplyBtn.addEventListener('click', () => {
+                document.getElementById('comments-section').prepend(commentFormContainer);
+                parentIdInput.value = '';
+                cancelReplyBtn.classList.add('hidden');
+            });
+
+            loadArticleAndComments();
+        });
+    </script>
+</body>
+</html>

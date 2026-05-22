@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - KemdeHolo</title>    <link href="style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<style>
+    /* Styles pour le Skeleton Loader */
+    .skeleton-card {
+        background-color: #fff;
+        border-radius: 1rem;
+        overflow: hidden;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        padding: 1.5rem;
+    }
+    .skeleton {
+        background-color: #e0e0e0;
+        border-radius: 0.25rem;
+        animation: shimmer 1.5s infinite linear;
+        background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+        background-size: 200% 100%;
+    }
+    .skeleton-image { height: 14rem; margin-bottom: 1.5rem; }
+    .skeleton-line { height: 1rem; margin-bottom: 0.75rem; }
+    .skeleton-line-short { width: 60%; }
+    @keyframes shimmer {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+    }
+</style>
+<body class="font-sans">
+    <!-- Animation de chargement (Preloader) -->
+    <div id="loader-container" class="loader-container">
+        <!-- REMPLACEZ par le chemin de votre logo -->
+        <img src="images/logo.png" alt="Chargement..." class="preloader-logo">
+    </div>
+
+    <!-- Navigation -->
+    <div id="header-placeholder"></div>
+
+    
+
+    <!-- Grille des articles -->
+    <section class="py-16 px-4 scroll-reveal">
+        <div class="container mx-auto">
+            <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Squelettes de chargement -->
+                <div class="skeleton-card"><div class="skeleton skeleton-image"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line skeleton-line-short"></div></div>
+                <div class="skeleton-card"><div class="skeleton skeleton-image"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line skeleton-line-short"></div></div>
+                <div class="skeleton-card"><div class="skeleton skeleton-image"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line skeleton-line-short"></div></div>
+                <div class="skeleton-card hidden md:block"><div class="skeleton skeleton-image"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line skeleton-line-short"></div></div>
+                <div class="skeleton-card hidden lg:block"><div class="skeleton skeleton-image"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line skeleton-line-short"></div></div>
+                <div class="skeleton-card hidden lg:block"><div class="skeleton skeleton-image"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line skeleton-line-short"></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="main-footer"></footer>
+
+    <script src="main.js"></script>
+    <script src="translations.js"></script>
+    <script src="language.js"></script>
+    <script>
+        async function chargerTousLesArticles() {
+            try {
+                const response = await fetch('/api/articles');
+                if (!response.ok) {
+                    throw new Error(`Erreur HTTP: ${response.status}`);
+                }
+                const articles = await response.json();
+                const grid = document.getElementById('articles-grid');
+
+                if (!articles || articles.length === 0) {
+                    grid.innerHTML = '<p class="text-center text-gray-500 col-span-full">Aucun article pour le moment.</p>';
+                    return;
+                }
+
+                grid.innerHTML = articles.map(article => `
+                    <div class="service-card bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex flex-col group transition-all duration-300 hover:shadow-lg hover:-translate-y-2">
+                        <div class="overflow-hidden">
+                            <a href="blog-article.html?id=${article.id}" class="block">
+                                <img src="${article.image || 'images/placeholder-image.png'}" alt="${article.titre}" class="w-full h-56 object-cover transform group-hover:scale-105 transition-transform duration-300">
+                            </a>
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <div class="text-sm text-gray-500 mb-2">
+                                <span class="font-semibold text-black">${article.categorie || 'Non classé'}</span>
+                                <span class="mx-2">|</span>
+                                <span>${new Date(article.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-black mb-3 flex-grow hover:text-gray-700 transition-colors"><a href="blog-article.html?id=${article.id}">${article.titre}</a></h3>
+                            <p class="text-gray-600 text-sm mb-6">${(article.contenu || '').substring(0, 120)}...</p> 
+                            <a href="blog-article.html?id=${article.id}" class="mt-auto text-white bg-primary-blue hover:bg-blue-800 font-bold py-2 px-4 rounded-full self-start transition-colors duration-300" aria-label="Lire la suite de l'article ${article.titre}">Lire la suite</a>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error("Erreur lors du chargement des articles:", error);
+                document.getElementById('articles-grid').innerHTML = '<p class="text-center text-red-500 col-span-full">Impossible de charger les articles.</p>';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', chargerTousLesArticles);
+    </script>
+</body>
+</html>

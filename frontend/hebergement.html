@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hébergement - KemdeHolo</title>   
+     <link href="style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+    <style>        
+        /* Style pour les cards de chambres */
+        .room-card {
+            transition: all 0.3s ease;
+        }
+        
+        .room-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Style pour les équipements */
+        .amenity-icon {
+            width: 24px;
+            height: 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 8px;
+            color: #030303; /* black */
+        }
+        
+        /* Galerie d'images */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .gallery-item {
+            border-radius: 8px;
+            overflow: hidden;
+            height: 200px;
+            position: relative;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        /* Style pour le formulaire de réservation */
+        .booking-form {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 30px;
+        }
+        
+        /* Indicateur de disponibilité */
+        .availability-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="font-sans">
+    <div id="header-placeholder"></div>
+
+    
+
+     <!-- Types de chambres -->
+    <section class="py-16 px-4 scroll-reveal">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12 text-[#050505]" data-translate-key="accommodation_rooms_title">Nos Types de Chambres</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Chambre Standard -->
+                <div class="room-card bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-2">
+                    <div class="relative">
+                        <img src="images/S.jpeg" class="w-full h-56 object-cover">
+                        <span class="availability-badge bg-black text-white">Disponible</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2" data-translate-key="accommodation_room1_title">Chambre Standard</h3>
+                        <p class="text-gray-600 mb-4" data-translate-key="accommodation_room1_desc">Idéale pour un séjour  et confortable.</p>
+                        <div class="mb-4">
+                            <div class="flex items-center mb-2">
+                                <div class="amenity-icon"><i class="fas fa-user"></i></div>
+                                <span data-translate-key="accommodation_room_persons">1-2 personnes</span>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <div class="amenity-icon"><i class="fas fa-bed"></i></div>
+                                <span data-translate-key="accommodation_room1_bed">1 lit </span>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <div class="amenity-icon"><i class="fas fa-bath"></i></div>
+                                <span data-translate-key="accommodation_room_bathroom">Salle de bain privée</span>
+                            </div>
+                            
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <p class="text-2xl font-bold text-black">15000 FCFA<span class="text-sm font-normal text-gray-500" data-translate-key="accommodation_room_price_unit">/nuit</span></p>
+                            <button data-room-type="Chambre Standard" class="btn-book-room bg-primary-blue hover:bg-primary-blue text-white px-4 py-2 rounded font-semibold text-sm" data-translate-key="accommodation_room_book_btn">
+                                Réserver
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Chambre Supérieure -->
+                <div class="room-card bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-2">
+                    <div class="relative">
+                        <img src="images/S.jpeg" alt="Chambre Supérieure" class="w-full h-56 object-cover">
+                        <span class="availability-badge bg-black text-white">Disponible</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2" data-translate-key="accommodation_room2_title">Chambre Supérieure</h3>
+                        <p class="text-gray-600 mb-4" data-translate-key="accommodation_room2_desc">Espace supplémentaire pour plus de confort.</p>
+                        <div class="mb-4">
+                            <div class="flex items-center mb-2">
+                                <div class="amenity-icon"><i class="fas fa-user"></i></div>
+                                <span data-translate-key="accommodation_room2_persons">1 personne</span>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <div class="amenity-icon"><i class="fas fa-bed"></i></div>
+                                <span data-translate-key="accommodation_room2_bed">1 lit </span>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <div class="amenity-icon"><i class="fas fa-bath"></i></div>
+                                <span data-translate-key="accommodation_room_bathroom">Salle de bain privée</span>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <div class="amenity-icon"><i class="fas fa-tv"></i></div>
+                            </div>
+                           
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <p class="text-2xl font-bold text-black">7000 FCFA<span class="text-sm font-normal text-gray-500" data-translate-key="accommodation_room_price_unit">/nuit</span></p>
+                            <button data-room-type="Chambre Supérieure" class="btn-book-room bg-primary-blue hover:bg-primary-blue text-white px-4 py-2 rounded font-semibold text-sm" data-translate-key="accommodation_room_book_btn">
+                                Réserver
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Suite -->
+                <div class="room-card bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-2">
+                    <div class="relative">
+                        <img src="images/S.jpeg" alt="Suite" class="w-full h-56 object-cover">
+                        <span class="availability-badge bg-black text-white">Disponible</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2" data-translate-key="accommodation_room3_title">chambre standard vip</h3>
+                        <p class="text-gray-600 mb-4" data-translate-key="accommodation_room3_desc">Espace luxueux pour un séjour mémorable.</p>
+                        <div class="mb-4">
+                            <div class="flex items-center mb-2">
+                                <div class="amenity-icon"><i class="fas fa-user"></i></div>
+                                <span data-translate-key="accommodation_room3_persons">2-4 personnes</span>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                
+                            <div class="flex items-center mb-2">
+                                <div class="amenity-icon"><i class="fas fa-bath"></i></div>
+                                <span data-translate-key="accommodation_room3_bathroom">Salle de bain spacieuse</span>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <div class="amenity-icon"><i class="fas fa-tv"></i></div>
+                                <span data-translate-key="accommodation_room_tv">Télévision écran plat</span>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <div class="amenity-icon"><i class="fas fa-snowflake"></i></div>
+                                <span data-translate-key="accommodation_room_ac">Climatisation</span>
+                            </div>
+                           
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <p class="text-2xl font-bold text-black">20000 FCFA<span class="text-sm font-normal text-gray-500" data-translate-key="accommodation_room_price_unit">/nuit</span></p>
+                            <button data-room-type="Suite" class="btn-book-room bg-primary-blue hover:bg-primary-blue text-white px-4 py-2 rounded font-semibold text-sm" data-translate-key="accommodation_room_book_btn">
+                                Réserver
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Équipements et Services -->
+    <section class="py-16 bg-gray-50 px-4 scroll-reveal">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12 text-[#030303]" data-translate-key="accommodation_amenities_title">Équipements et Services</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="service-card bg-white rounded-xl shadow-sm border p-6 text-center transition-all duration-300 hover:shadow-lg hover:-translate-y-2">
+                    <div class="w-20 h-20 bg-black rounded-full mx-auto mb-6 flex items-center justify-center">
+                        <i class="fas fa-wifi text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2" data-translate-key="accommodation_amenity1_title">Wi-Fi Gratuit</h3>
+                    <p class="text-gray-600" data-translate-key="accommodation_amenity1_desc">Connexion internet haut débit dans tout l'établissement</p>
+                </div>
+                
+                <div class="service-card bg-white rounded-xl shadow-sm border p-6 text-center transition-all duration-300 hover:shadow-lg hover:-translate-y-2">
+                    <div class="w-20 h-20 bg-black rounded-full mx-auto mb-6 flex items-center justify-center">
+                        <i class="fas fa-parking text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2" data-translate-key="accommodation_amenity2_title">Parking Sécurisé</h3>
+                    <p class="text-gray-600" data-translate-key="accommodation_amenity2_desc">Parking gratuit et surveillé 24h/24</p>
+                </div>
+                
+                <div class="service-card bg-white rounded-xl shadow-sm border p-6 text-center transition-all duration-300 hover:shadow-lg hover:-translate-y-2">
+                    <div class="w-20 h-20 bg-black rounded-full mx-auto mb-6 flex items-center justify-center">
+                        <i class="fas fa-utensils text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2" data-translate-key="accommodation_amenity3_title">Petit-déjeuner</h3>
+                    <p class="text-gray-600" data-translate-key="accommodation_amenity3_desc">Petit-déjeuner buffet inclus avec produits locaux</p>
+                </div>
+                
+                <div class="service-card bg-white rounded-xl shadow-sm border p-6 text-center transition-all duration-300 hover:shadow-lg hover:-translate-y-2">
+                    <div class="w-20 h-20 bg-black rounded-full mx-auto mb-6 flex items-center justify-center">
+                        <i class="fas fa-concierge-bell text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2" data-translate-key="accommodation_amenity4_title">Service de Chambre</h3>
+                    <p class="text-gray-600" data-translate-key="accommodation_amenity4_desc">Service de nettoyage quotidien et assistance 24h/24</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <!-- Localisation -->
+    <section class="py-16 bg-white px-4 scroll-reveal">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12 text-[#030303]" data-translate-key="accommodation_location_title">Notre Emplacement</h2>
+            <div class="w-full h-[450px] rounded-lg shadow-lg overflow-hidden">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3909.992630154378!2d16.0690127!3d8.5503001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x10e73f9627f8770f%3A0x744f14c0be87b9dc!2sKEMDEHOLO%20H%C3%89BERGEMENT!5e0!3m2!1sfr!2stc!4v1721223456789!5m2!1sfr!2stc" 
+                    width="100%" 
+                    height="100%" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+   
+
+     
+
+    <!-- Fenêtre Modale de Réservation -->
+    <div id="reservation-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="reservation-modal-title">
+      <div class="bg-white rounded-lg shadow-xl p-8 max-w-md w-full relative">
+        <button id="close-reservation-modal-btn" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-3xl leading-none">&times;</button>
+        <h2 id="reservation-modal-title" class="text-2xl font-bold mb-4 text-black" data-translate-key="modal_reservation_title">Demande de Réservation</h2>
+        <form id="reservation-form">
+          <!-- Champ pour le type de chambre -->
+          <div class="mb-4">
+            <label for="room-type-select" class="block text-gray-700 font-semibold mb-2">Type de chambre</label>
+            <select id="room-type-select" name="roomType" class="w-full px-3 py-2 rounded border border-gray-300" required>
+              <option value="">Sélectionnez un type de chambre</option>
+            </select>
+          </div>
+          <div class="mb-4">
+            <label for="customer-name" class="block text-gray-700 font-semibold mb-2" data-translate-key="modal_reservation_name">Nom complet</label>
+            <input type="text" id="customer-name" name="customerName" required class="w-full px-3 py-2 rounded border border-gray-300" autocomplete="name">
+          </div>
+          <div class="mb-4">
+            <label for="customer-email" class="block text-gray-700 font-semibold mb-2" data-translate-key="modal_reservation_email">Email</label>
+            <input type="email" id="customer-email" name="customerEmail" required class="w-full px-3 py-2 rounded border border-gray-300" autocomplete="email">
+          </div>
+          <div class="mb-4">
+            <label for="customer-phone" class="block text-gray-700 font-semibold mb-2">Téléphone (Optionnel)</label>
+            <input type="tel" id="customer-phone" name="customerPhone" class="w-full px-3 py-2 rounded border border-gray-300" autocomplete="tel">
+          </div>
+          <div class="mb-4">
+            <label for="adults-select" class="block text-gray-700 font-semibold mb-2">Adultes</label>
+            <select id="adults-select" name="adults" class="w-full px-3 py-2 rounded border border-gray-300" required>
+              <option value="1">1 Adulte</option>
+              <option value="2" selected>2 Adultes</option>
+              <option value="3">3 Adultes</option>
+              <option value="4">4 Adultes</option>
+            </select>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div>
+              <label for="arrival-date" class="block text-gray-700 font-semibold mb-2" data-translate-key="modal_reservation_arrival">Date d'arrivée</label>
+              <input type="date" id="arrival-date" name="arrivalDate" required class="w-full px-3 py-2 rounded border border-gray-300" autocomplete="off">
+            </div>
+            <div>
+              <label for="departure-date" class="block text-gray-700 font-semibold mb-2" data-translate-key="modal_reservation_departure">Date de départ</label>
+              <input type="date" id="departure-date" name="departureDate" required class="w-full px-3 py-2 rounded border border-gray-300" autocomplete="off">
+            </div>
+          </div>
+          <div class="mb-4">
+            <label for="special-requests" class="block text-gray-700 font-semibold mb-2" data-translate-key="modal_reservation_requests">Demandes spéciales (optionnel)</label>
+            <textarea id="special-requests" name="specialRequests" rows="3" class="w-full px-3 py-2 rounded border border-gray-300"></textarea>
+          </div>
+          <button type="submit" class="w-full btn-primary" data-translate-key="modal_reservation_submit">Envoyer la demande</button>
+        </form>
+      </div>
+    </div>
+        <footer id="main-footer"></footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+    <script src="main.js"></script>
+
+    <script src="script.js"></script>
+    <script src="translations.js"></script>
+    <script src="language.js"></script>
+    <script>
+        // Le code de gestion de la modale a été déplacé dans main.js pour éviter les conflits.
+    </script>
+</body>
+</html>

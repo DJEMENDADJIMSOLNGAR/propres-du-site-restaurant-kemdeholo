@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blanchisserie - KemdeHolo</title>    <link href="style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+    <style>        
+        .service-card {
+            transition: all 0.3s ease;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .gallery-item {
+            border-radius: 8px;
+            overflow: hidden;
+            height: 200px;
+            position: relative;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .advantage-icon {
+            width: 24px;
+            height: 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 8px;
+            color: #000000;
+        }
+        
+        .price-table {
+            border-collapse: separate;
+            border-spacing: 0;
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .price-table th {
+            background-color: #000;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        .price-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .price-table tr:nth-child(odd) {
+            background-color: white;
+        }
+        
+        .price-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .process-step {
+            position: relative;
+            padding-left: 70px;
+            padding-bottom: 40px;
+        }
+
+        .process-step-number {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 45px;
+            height: 45px;            background-color: #0a0a0a;
+            color: white; /* kept red for the button */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px #0c0c0c;
+        }
+
+        .process-step:not(:last-child)::before {
+            content: '';
+            position: absolute;
+            left: 22px;
+            top: 45px;
+            width: 3px;
+            height: calc(100% - 20px);
+            background-color: #e2e8f0;
+        }
+
+        .process-step h3 {
+            color: #000;
+        }
+
+        .gallery-item img {
+            width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Styles pour la FAQ */
+        .faq-question i {
+            transition: transform 0.3s ease;
+        }
+        .faq-item.open .faq-question i {
+            transform: rotate(180deg);
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+        }
+        .faq-item.open .faq-answer {
+            max-height: 300px; /* Hauteur suffisante pour la réponse */
+        }
+
+        .pricing-item {
+            display: flex;
+            align-items: center; /* Centre verticalement l'icône et le texte */
+        }
+
+        .item-name { flex-grow: 1; font-weight: 600; color: #374151; } 
+        .item-price { font-weight: 700; color: #000; font-size: 1.125rem; }
+        .pricing-item i {
+            color: #000 !important; /* Couleur noire pour l'icône */
+            margin-right: 0.75rem; /* Espace entre l'icône et le texte */
+            font-size: 1.1rem;
+        }
+
+    </style>
+</head>
+<body class="font-sans">
+    <!-- Navigation -->
+    <div id="header-placeholder"></div>
+    
+<!-- Avantages -->
+    <section class="py-16 bg-gray-50 px-4 scroll-reveal">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12 text-[#050505]">Nos Avantages</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="service-card service-card-animated bg-white rounded-xl shadow-sm border border-gray-200 p-6 text-center transition-all duration-300 hover:shadow-lg hover:-translate-y-2">
+                    <div class="w-20 h-20 bg-black rounded-full mx-auto mb-6 flex items-center justify-center"><i class="fas fa-truck text-3xl text-white"></i></div>
+                    <h3 class="font-semibold mb-2">Service de Ramassage</h3>
+                    <p class="text-gray-600">Nous venons chercher et livrons votre linge à domicile</p>
+                </div>
+                
+                <div class="service-card service-card-animated bg-white rounded-xl shadow-sm border border-gray-200 p-6 text-center transition-all duration-300 hover:shadow-lg hover:-translate-y-2">
+                    <div class="w-20 h-20 bg-black rounded-full mx-auto mb-6 flex items-center justify-center"><i class="fas fa-leaf text-3xl text-white"></i></div>
+                    <h3 class="font-semibold mb-2">Écologique</h3>
+                    <p class="text-gray-600">Produits respectueux de l'environnement et process optimisés</p>
+                </div>
+                
+                <div class="service-card service-card-animated bg-white rounded-xl shadow-sm border border-gray-200 p-6 text-center transition-all duration-300 hover:shadow-lg hover:-translate-y-2">
+                    <div class="w-20 h-20 bg-black rounded-full mx-auto mb-6 flex items-center justify-center"><i class="fas fa-clock text-3xl text-white"></i></div>
+                    <h3 class="font-semibold mb-2">Rapidité</h3>
+                    <p class="text-gray-600">Service express disponible (24h) pour les urgences</p>
+                </div>
+                
+                <div class="service-card service-card-animated bg-white rounded-xl shadow-sm border border-gray-200 p-6 text-center transition-all duration-300 hover:shadow-lg hover:-translate-y-2">
+                    <div class="w-20 h-20 bg-black rounded-full mx-auto mb-6 flex items-center justify-center"><i class="fas fa-medal text-3xl text-white"></i></div>
+                    <h3 class="font-semibold mb-2">Qualité</h3>
+                    <p class="text-gray-600">Contrôle qualité rigoureux sur chaque article</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services de blanchisserie -->
+    <section id="services" class="py-16 px-4 scroll-reveal">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12 text-black" data-translate-key="laundry_services_title">Nos Services</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Lavage et repassage -->
+                <div class="service-card service-card-animated bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-2">
+                    <div class="relative">
+                        <img src="images/blanchisserie.jpeg" alt="Lavage et repassage" class="w-full h-48 object-cover">
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-xl font-semibold mb-2" data-translate-key="laundry_service1_title">Lavage & Repassage</h3>
+                        <p class="text-gray-600 mb-4">Service complet pour un linge propre et impeccable.</p>
+                        <div class="mb-4">
+                            <div class="flex items-center mb-2">
+                                <div class="advantage-icon"><i class="fas fa-clock"></i></div>
+                                <span>24-48 heures</span>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <div class="advantage-icon"><i class="fas fa-tshirt"></i></div>
+                                <span>Tous types de textiles</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="advantage-icon"><i class="fas fa-star"></i></div>
+                                <span>Qualité professionnelle</span>
+                            </div>
+                        </div>
+                        <div class="text-center mt-auto">                            
+                            <a href="#tarifs" class="bg-primary-blue hover:bg-red-700 text-white px-4 py-2 rounded font-semibold text-sm">
+                                Voir les tarifs
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Nettoyage à sec -->
+                <div class="service-card service-card-animated bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-2">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1582738411706-bfc8e691d1c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=8" alt="Nettoyage à sec" class="w-full h-48 object-cover">
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-xl font-semibold mb-2">Nettoyage à Sec</h3>
+                        <p class="text-gray-600 mb-4">Pour les vêtements délicats et professionnels.</p>
+                        <div class="mb-4">
+                            <div class="flex items-center mb-2">
+                                <div class="advantage-icon"><i class="fas fa-clock"></i></div>
+                                <span>48-72 heures</span>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <div class="advantage-icon"><i class="fas fa-vest"></i></div>
+                                <span>Costumes et vêtements délicats</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="advantage-icon"><i class="fas fa-medal"></i></div>
+                                <span>Technique professionnelle</span>
+                            </div>
+                        </div>
+                        <div class="text-center mt-auto">                            
+                            <a href="#tarifs" class="bg-primary-blue hover:bg-red-700 text-white px-4 py-2 rounded font-semibold text-sm">
+                                Voir les tarifs
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Service Hôtelier -->
+                <div class="service-card service-card-animated bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-2">
+                    <div class="relative">
+                        <img src="images/hhh.jpeg" alt="Service Hôtelier" class="w-full h-48 object-cover">
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-xl font-semibold mb-2">Service Hôtelier</h3>
+                        <p class="text-gray-600 mb-4">Pour les professionnels de l'hôtellerie et restauration.</p>
+                        <div class="mb-4">
+                            <div class="flex items-center mb-2">
+                                <div class="advantage-icon"><i class="fas fa-clock"></i></div>
+                                <span>Service régulier</span>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <div class="advantage-icon"><i class="fas fa-bed"></i></div>
+                                <span>Linge de lit et de table</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="advantage-icon"><i class="fas fa-concierge-bell"></i></div>
+                                <span>Service sur mesure</span>
+                            </div>
+                        </div>
+                        <div class="text-center mt-auto">                            
+                            <a href="#contact" class="bg-primary-blue hover:bg-red-700 text-white px-4 py-2 rounded font-semibold text-sm">
+                                Demander un devis
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   
+
+    
+ <!-- Tarifs -->
+    <section id="tarifs" class="py-16 px-4 scroll-reveal">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12 text-black">Nos Tarifs</h2>
+            
+            <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-8">
+                <h3 class="text-xl font-semibold mb-6 text-center">Lavage et Repassage (par pièce)</h3>
+                
+                <div class="pricing-list">
+                    <div class="pricing-item"><span class="item-name">Chemise</span><span class="item-dots"></span><span class="item-price">250 FCFA</span></div>
+                    <div class="pricing-item"><span class="item-name">Pantalon</span><span class="item-dots"></span><span class="item-price">300 FCFA</span></div>
+                    <div class="pricing-item"><span class="item-name">Maillot</span><span class="item-dots"></span><span class="item-price">300 FCFA</span></div>
+                    <div class="pricing-item"><span class="item-name">Veste / Blouson</span><span class="item-dots"></span><span class="item-price">500 FCFA</span></div>
+                    <div class="pricing-item"><span class="item-name">Serviette de bain</span><span class="item-dots"></span><span class="item-price">500 FCFA</span></div>
+                    <div class="pricing-item"><span class="item-name">Robe dame</span><span class="item-dots"></span><span class="item-price">750 FCFA</span></div>
+                    <div class="pricing-item"><span class="item-name">Kaptani</span><span class="item-dots"></span><span class="item-price">750 FCFA</span></div>
+                    <div class="pricing-item"><span class="item-name">Drap de lit</span><span class="item-dots"></span><span class="item-price">750 FCFA</span></div>
+                    <div class="pricing-item"><span class="item-name">Costume</span><span class="item-dots"></span><span class="item-price">1000 FCFA</span></div>
+                    <div class="pricing-item"><span class="item-name">Grand boubou</span><span class="item-dots"></span><span class="item-price">1000 FCFA</span></div>
+                    <div class="pricing-item"><span class="item-name">Complet dame</span><span class="item-dots"></span><span class="item-price">1000 FCFA</span></div>
+                    <div class="pricing-item"><span class="item-name">Couverture</span><span class="item-dots"></span><span class="item-price">1000 FCFA</span></div>
+                </div>
+
+                <p class="text-center text-gray-500 text-sm mt-8">
+                    Pour les articles non listés ou les demandes spécifiques (nettoyage à sec, service hôtelier), veuillez nous contacter pour un devis personnalisé.
+                </p>
+            </div>
+        </div>
+    </section>
+    
+
+    
+    <!-- CTA (Contact) -->
+    <section class="bg-white text-black p-4 sticky top-0 z-50 scroll-reveal">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-6">Prêt à profiter de notre service ?</h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto">Contactez-nous dès aujourd'hui pour un devis personnalisé ou pour planifier une collecte.</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4 items-center">
+                <a href="tel:+235 66 26 43 51" class="bg-primary-blue hover:bg-primary-blue text-white px-6 py-3 rounded-lg font-semibold inline-flex items-center justify-center">
+                    <i class="fas fa-phone mr-2"></i> Nous appeler
+                </a>
+                <a href="https://wa.me/+23566264351" class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-semibold inline-flex items-center justify-center">
+                    <i class="fab fa-whatsapp mr-2"></i> WhatsApp
+                </a>
+            </div>
+        </div>
+   </section>
+
+    <!-- Footer -->
+    <footer id="main-footer"></footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+    <script src="main.js"></script>
+    <script src="translations.js"></script>
+    <script src="language.js"></script>
+    <script>
+        async function chargerTemoignages(categorie) {
+            try {
+                const response = await fetch(`/api/testimonials?category=${categorie}`);
+                if (!response.ok) throw new Error('Erreur de chargement des témoignages.');
+                const testimonials = await response.json();
+
+                const sliderWrapper = document.getElementById('testimonial-slider-wrapper');
+                const sliderContent = document.getElementById('testimonial-slider-content');
+                const sliderNav = document.getElementById('testimonial-slider-nav');
+
+                if (!testimonials || testimonials.length === 0) {
+                    sliderWrapper.innerHTML = `<p class="text-center text-white/70">Aucun témoignage pour la catégorie "${categorie}".</p>`;
+                    sliderWrapper.classList.remove('hidden');
+                    return;
+                }
+
+                sliderContent.innerHTML = testimonials.map(t => `
+                    <div class="testimonial-item">
+                        <p>"${t.quote}"</p>
+                        <div class="author-info">
+                            <span class="author-name">${t.name}</span>
+                        </div>
+                    </div>
+                `).join('');
+
+                sliderNav.innerHTML = testimonials.map(t => `
+                    <div>
+                        <img src="${t.image || 'images/placeholder-avatar.png'}" alt="${t.name}" class="author-image">
+                    </div>
+                `).join('');
+
+                $('#testimonial-slider-content').slick({
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    arrows: false,
+                    fade: true,
+                    asNavFor: '#testimonial-slider-nav',
+                    autoplay: true, // Activation du défilement automatique
+                    autoplaySpeed: 5000, // Toutes les 5 secondes
+                    pauseOnHover: true // Pause au survol de la souris
+                });
+                $('#testimonial-slider-nav').slick({
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                    asNavFor: '#testimonial-slider-content',
+                    dots: false,
+                    centerMode: true,
+                    focusOnSelect: true,
+                    arrows: false
+                });
+                sliderWrapper.classList.remove('hidden');
+            } catch (error) {
+                console.error(error);
+                document.getElementById('testimonial-slider-wrapper').innerHTML = `<p class="text-center text-yellow-400">${error.message}</p>`;
+            }
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            // FAQ Accordion
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                question.addEventListener('click', () => {
+                    // Ferme les autres items ouverts pour un effet "accordéon"
+                    // faqItems.forEach(otherItem => {
+                    //     if (otherItem !== item) otherItem.classList.remove('open');
+                    // });
+                    item.classList.toggle('open');
+                });
+            });
+        });
+        document.addEventListener('DOMContentLoaded', () => chargerTemoignages('Blanchisserie'));
+    </script>
+</body>
+</html>

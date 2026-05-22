@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant - KemdeHolo</title>
+     <link href="style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+    <style>
+        /* Galerie d'images */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .gallery-item {
+            border-radius: 8px;
+            overflow: hidden;
+            height: 200px;
+            position: relative;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Styles pour les filtres du menu */
+        .filter-btn {
+            padding: 8px 20px;
+            border: 2px solid #030303; /* black */
+            color: #030303; /* black */
+            border-radius: 9999px;
+            font-weight: 600;
+            transition: all 0.2s ease-in-out;
+        }
+        .filter-btn:hover, .filter-btn.active {
+            background-color: #e5612f;
+            color: white;
+            border-color: #e5612f;
+        }
+
+    </style>
+</head>
+<body class="font-sans">
+    <div id="header-placeholder"></div>
+
+   
+
+   
+
+   <!-- Menu Section -->
+    <section id="menu" class="py-16 scroll-reveal">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12 text-[#070707]" data-translate-key="restaurant_menu_title">Notre Menu</h2>
+
+        <!-- Filtres de catégories -->
+        <div id="menu-filters" class="flex justify-center flex-wrap gap-2 md:gap-4 mb-10">
+            <button class="filter-btn active" data-category="all" data-translate-key="restaurant_filter_all">Tous</button>
+            <button class="filter-btn" data-category="volailles" data-translate-key="restaurant_filter_poultry">Volailles</button>
+            <button class="filter-btn" data-category="poissons" data-translate-key="restaurant_filter_fish">Poissons</button>
+            <button class="filter-btn" data-category="viandes" data-translate-key="restaurant_filter_meat">Viandes</button>
+            <button class="filter-btn" data-category="pates-riz" data-translate-key="restaurant_filter_pasta_rice">Pâtes & Riz</button>
+            <button class="filter-btn" data-category="sauces" data-translate-key="restaurant_filter_sauces">Sauces</button>
+            <button class="filter-btn" data-category="desserts" data-translate-key="restaurant_filter_desserts">Desserts</button>
+            <button class="filter-btn" data-category="boissons" data-translate-key="restaurant_filter_drinks">Boissons</button>
+        </div>
+
+        <div id="menu-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Volailles -->
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-category="volailles"><img src="images/poulet braisé.jpeg" alt="½ Poulet braisé" class="w-full h-48 object-cover"><div class="p-6 flex flex-col flex-grow"><h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">½ Poulet braisé</h3><div class="flex justify-between items-center mt-auto"><span class="text-black font-bold text-xl">3000 FCFA</span><button class="order-btn btn-primary !py-2 !px-5" data-item-name="½ Poulet braisé">Commander</button></div></div></div>
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-category="volailles"><img src="images/poulet grie.jpeg" alt="½ Poulet grillé" class="w-full h-48 object-cover"><div class="p-6 flex flex-col flex-grow"><h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">½ Poulet grillé</h3><div class="flex justify-between items-center mt-auto"><span class="text-black font-bold text-xl">3000 FCFA</span><button class="order-btn btn-primary !py-2 !px-5" data-item-name="½ Poulet grillé">Commander</button></div></div></div>
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-category="volailles"><img src="images/poulet pané.jpeg" alt="½ Poulet pané" class="w-full h-48 object-cover"><div class="p-6 flex flex-col flex-grow"><h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">½ Poulet pané</h3><div class="flex justify-between items-center mt-auto"><span class="text-black font-bold text-xl">3000 FCFA</span><button class="order-btn btn-primary !py-2 !px-5" data-item-name="½ Poulet pané">Commander</button></div></div></div>
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-category="volailles"><img src="images/Viande DG.jpeg" alt="½ Poulet DG" class="w-full h-48 object-cover"><div class="p-6 flex flex-col flex-grow"><h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">½ Poulet DG</h3><div class="flex justify-between items-center mt-auto"><span class="text-black font-bold text-xl">3500 FCFA</span><button class="order-btn btn-primary !py-2 !px-5" data-item-name="½ Poulet DG">Commander</button></div></div></div>
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-category="volailles"><img src="images/poulet sauce tomate.jpeg" alt="½ Poulet sauce tomate" class="w-full h-48 object-cover"><div class="p-6 flex flex-col flex-grow"><h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">½ Poulet sauce tomate</h3><div class="flex justify-between items-center mt-auto"><span class="text-black font-bold text-xl">3000 FCFA</span><button class="order-btn btn-primary !py-2 !px-5" data-item-name="½ Poulet sauce tomate">Commander</button></div></div></div>
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-category="volailles"><img src="images/poulet sauce gombo.jpeg" alt="½ Poulet sauce gombo" class="w-full h-48 object-cover"><div class="p-6 flex flex-col flex-grow"><h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">½ Poulet sauce gombo</h3><div class="flex justify-between items-center mt-auto"><span class="text-black font-bold text-xl">3000 FCFA</span><button class="order-btn btn-primary !py-2 !px-5" data-item-name="½ Poulet sauce gombo">Commander</button></div></div></div>
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-category="volailles"><img src="images/Poulet sauce jaune.jpeg" alt="½ Poulet sauce jaune" class="w-full h-48 object-cover"><div class="p-6 flex flex-col flex-grow"><h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">½ Poulet sauce jaune</h3><div class="flex justify-between items-center mt-auto"><span class="text-black font-bold text-xl">3000 FCFA</span><button class="order-btn btn-primary !py-2 !px-5" data-item-name="½ Poulet sauce jaune">Commander</button></div></div></div>
+            
+            <!-- Poissons -->
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-category="poissons"><img src="images/bbbbbb.jpeg" alt="Carpe braisée" class="w-full h-48 object-cover"><div class="p-6 flex flex-col flex-grow"><h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">Carpe braisée</h3><div class="flex justify-between items-center mt-auto"><span class="text-black font-bold text-xl">3000 FCFA</span><button class="order-btn btn-primary !py-2 !px-5" data-item-name="Carpe braisée">Commander</button></div></div></div>
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-category="poissons"><img src="images/Carpe grillée.jpeg" alt="Carpe grillée" class="w-full h-48 object-cover"><div class="p-6 flex flex-col flex-grow"><h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">Carpe grillée</h3><div class="flex justify-between items-center mt-auto"><span class="text-black font-bold text-xl">3000 FCFA</span><button class="order-btn btn-primary !py-2 !px-5" data-item-name="Carpe grillée">Commander</button></div></div></div>
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-category="poissons"><img src="images/Carpe panée.jpg" alt="Carpe panée" class="w-full h-48 object-cover"><div class="p-6 flex flex-col flex-grow"><h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">Carpe panée</h3><div class="flex justify-between items-center mt-auto"><span class="text-black font-bold text-xl">3000 FCFA</span><button class="order-btn btn-primary !py-2 !px-5" data-item-name="Carpe panée">Commander</button></div></div></div>
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-category="poissons"><img src="images/Viande DG.jpeg" alt="Carpe DG" class="w-full h-48 object-cover"><div class="p-6 flex flex-col flex-grow"><h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">Carpe DG</h3><div class="flex justify-between items-center mt-auto"><span class="text-black font-bold text-xl">3500 FCFA</span><button class="order-btn btn-primary !py-2 !px-5" data-item-name="Carpe DG">Commander</button></div></div></div>
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-category="poissons"><img src="images/Carpe sauce tomate.jpeg" alt="Carpe sauce tomate" class="w-full h-48 object-cover"><div class="p-6 flex flex-col flex-grow"><h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">Carpe sauce tomate</h3><div class="flex justify-between items-center mt-auto"><span class="text-black font-bold text-xl">3000 FCFA</span><button class="order-btn btn-primary !py-2 !px-5" data-item-name="Carpe sauce tomate">Commander</button></div></div></div>
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-category="poissons"><img src="images/Carpe sauce gombo.jpeg" alt="Carpe sauce gombo" class="w-full h-48 object-cover"><div class="p-6 flex flex-col flex-grow"><h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">Carpe sauce gombo</h3><div class="flex justify-between items-center mt-auto"><span class="text-black font-bold text-xl">3000 FCFA</span><button class="order-btn btn-primary !py-2 !px-5" data-item-name="Carpe sauce gombo">Commander</button></div></div></div>
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-category="poissons"><img src="images/Carpe sauce jaune.jpeg" alt="Carpe sauce jaune" class="w-full h-48 object-cover"><div class="p-6 flex flex-col flex-grow"><h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">Carpe sauce jaune</h3><div class="flex justify-between items-center mt-auto"><span class="text-black font-bold text-xl">3000 FCFA</span><button class="order-btn btn-primary !py-2 !px-5" data-item-name="Carpe sauce jaune">Commander</button></div></div></div>
+
+            <!-- Viandes -->
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-category="viandes"><img src="images/Viande braisée.jpeg" alt="Viande braisée" class="w-full h-48 object-cover"><div class="p-6 flex flex-col flex-grow"><h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">Viande braisée</h3><div class="flex justify-between items-center mt-auto"><span class="text-black font-bold text-xl">3000 FCFA</span><button class="order-btn btn-primary !py-2 !px-5" data-item-name="Viande braisée">Commander</button></div></div></div>
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-category="viandes"><img src="images/Viande grillée.jpeg" alt="Viande grillée" class="w-full h-48 object-cover"><div class="p-6 flex flex-col flex-grow"><h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">Viande grillée</h3><div class="flex justify-between items-center mt-auto"><span class="text-black font-bold text-xl">3000 FCFA</span><button class="order-btn btn-primary !py-2 !px-5" data-item-name="Viande grillée">Commander</button></div></div></div>
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-category="viandes"><img src="images/Viande panée.jpeg" alt="Viande panée" class="w-full h-48 object-cover"><div class="p-6 flex flex-col flex-grow"><h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">Viande panée</h3><div class="flex justify-between items-center mt-auto"><span class="text-black font-bold text-xl">3000 FCFA</span><button class="order-btn btn-primary !py-2 !px-5" data-item-name="Viande panée">Commander</button></div></div></div>
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-category="viandes"><img src="images/Viande DG.jpeg" alt="Viande DG" class="w-full h-48 object-cover"><div class="p-6 flex flex-col flex-grow"><h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">Viande DG</h3><div class="flex justify-between items-center mt-auto"><span class="text-black font-bold text-xl">3500 FCFA</span><button class="order-btn btn-primary !py-2 !px-5" data-item-name="Viande DG">Commander</button></div></div></div>
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-category="viandes"><img src="images/Viande sauce tomate.jpeg" alt="Viande sauce tomate" class="w-full h-48 object-cover"><div class="p-6 flex flex-col flex-grow"><h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">Viande sauce tomate</h3><div class="flex justify-between items-center mt-auto"><span class="text-black font-bold text-xl">3000 FCFA</span><button class="order-btn btn-primary !py-2 !px-5" data-item-name="Viande sauce tomate">Commander</button></div></div></div>
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-category="viandes"><img src="images/Viande sauce gombo.jpeg" alt="Viande sauce gombo" class="w-full h-48 object-cover"><div class="p-6 flex flex-col flex-grow"><h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">Viande sauce gombo</h3><div class="flex justify-between items-center mt-auto"><span class="text-black font-bold text-xl">3000 FCFA</span><button class="order-btn btn-primary !py-2 !px-5" data-item-name="Viande sauce gombo">Commander</button></div></div></div>
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-category="viandes"><img src="images/Viande sauce jaune.jpeg" alt="Viande sauce jaune" class="w-full h-48 object-cover"><div class="p-6 flex flex-col flex-grow"><h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">Viande sauce jaune</h3><div class="flex justify-between items-center mt-auto"><span class="text-black font-bold text-xl">3000 FCFA</span><button class="order-btn btn-primary !py-2 !px-5" data-item-name="Viande sauce jaune">Commander</button></div></div></div>
+
+            <!-- Pâtes et Riz -->
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-category="pates-riz"><img src="images/Spaghetti nature.jpg" alt="Spaghetti nature" class="w-full h-48 object-cover"><div class="p-6 flex flex-col flex-grow"><h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">Spaghetti nature</h3><div class="flex justify-between items-center mt-auto"><span class="text-black font-bold text-xl">1000 FCFA</span><button class="order-btn btn-primary !py-2 !px-5" data-item-name="Spaghetti nature">Commander</button></div></div></div>
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-category="pates-riz"><img src="images/Spaghetti sautés.jpeg" alt="Spaghetti sautés" class="w-full h-48 object-cover"><div class="p-6 flex flex-col flex-grow"><h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">Spaghetti sautés</h3><div class="flex justify-between items-center mt-auto"><span class="text-black font-bold text-xl">1500 FCFA</span><button class="order-btn btn-primary !py-2 !px-5" data-item-name="Spaghetti sautés">Commander</button></div></div></div>
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-category="pates-riz"><img src="images/Spaghetti à la viande.jpeg" alt="Spaghetti à la viande" class="w-full h-48 object-cover"><div class="p-6 flex flex-col flex-grow"><h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">Spaghetti à la viande</h3><div class="flex justify-between items-center mt-auto"><span class="text-black font-bold text-xl">2000 FCFA</span><button class="order-btn btn-primary !py-2 !px-5" data-item-name="Spaghetti à la viande">Commander</button></div></div></div>
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-category="pates-riz"><img src="images/Spaghetti au poisson.jpg" alt="Spaghetti au poisson" class="w-full h-48 object-cover"><div class="p-6 flex flex-col flex-grow"><h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">Spaghetti au poisson</h3><div class="flex justify-between items-center mt-auto"><span class="text-black font-bold text-xl">2000 FCFA</span><button class="order-btn btn-primary !py-2 !px-5" data-item-name="Spaghetti au poisson">Commander</button></div></div></div>
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-category="pates-riz"><img src="images/Spaghetti au poulet.jpeg" alt="Spaghetti au poulet" class="w-full h-48 object-cover"><div class="p-6 flex flex-col flex-grow"><h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">Spaghetti au poulet</h3><div class="flex justify-between items-center mt-auto"><span class="text-black font-bold text-xl">2000 FCFA</span><button class="order-btn btn-primary !py-2 !px-5" data-item-name="Spaghetti au poulet">Commander</button></div></div></div>
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-category="pates-riz"><img src="images/Riz nature.jpeg" alt="Riz nature" class="w-full h-48 object-cover"><div class="p-6 flex flex-col flex-grow"><h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">Riz nature</h3><div class="flex justify-between items-center mt-auto"><span class="text-black font-bold text-xl">1000 FCFA</span><button class="order-btn btn-primary !py-2 !px-5" data-item-name="Riz nature">Commander</button></div></div></div>
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-category="pates-riz"><img src="images/Riz sauté.jpeg" alt="Riz sauté" class="w-full h-48 object-cover"><div class="p-6 flex flex-col flex-grow"><h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">Riz sauté</h3><div class="flex justify-between items-center mt-auto"><span class="text-black font-bold text-xl">1500 FCFA</span><button class="order-btn btn-primary !py-2 !px-5" data-item-name="Riz sauté">Commander</button></div></div></div>
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-category="pates-riz"><img src="images/Riz à la viande.jpeg" alt="Riz à la viande" class="w-full h-48 object-cover"><div class="p-6 flex flex-col flex-grow"><h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">Riz à la viande</h3><div class="flex justify-between items-center mt-auto"><span class="text-black font-bold text-xl">2000 FCFA</span><button class="order-btn btn-primary !py-2 !px-5" data-item-name="Riz à la viande">Commander</button></div></div></div>
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-category="pates-riz"><img src="images/Riz au poisson.jpeg" alt="Riz au poisson" class="w-full h-48 object-cover"><div class="p-6 flex flex-col flex-grow"><h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">Riz au poisson</h3><div class="flex justify-between items-center mt-auto"><span class="text-black font-bold text-xl">2000 FCFA</span><button class="order-btn btn-primary !py-2 !px-5" data-item-name="Riz au poisson">Commander</button></div></div></div>
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-category="pates-riz"><img src="images/Riz au poulet.jpeg" alt="Riz au poulet" class="w-full h-48 object-cover"><div class="p-6 flex flex-col flex-grow"><h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">Riz au poulet</h3><div class="flex justify-between items-center mt-auto"><span class="text-black font-bold text-xl">2000 FCFA</span><button class="order-btn btn-primary !py-2 !px-5" data-item-name="Riz au poulet">Commander</button></div></div></div>
+
+            <!-- Sauces -->
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-category="sauces"><img src="images/Sauce tomate.jpeg" alt="Sauce tomate" class="w-full h-48 object-cover"><div class="p-6 flex flex-col flex-grow"><h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">Sauce tomate</h3><div class="flex justify-between items-center mt-auto"><span class="text-black font-bold text-xl">1000 FCFA</span><button class="order-btn btn-primary !py-2 !px-5" data-item-name="Sauce tomate">Commander</button></div></div></div>
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-category="sauces"><img src="images/Sauce gombo.jpg" alt="Sauce gombo" class="w-full h-48 object-cover"><div class="p-6 flex flex-col flex-grow"><h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">Sauce gombo</h3><div class="flex justify-between items-center mt-auto"><span class="text-black font-bold text-xl">1000 FCFA</span><button class="order-btn btn-primary !py-2 !px-5" data-item-name="Sauce gombo">Commander</button></div></div></div>
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-category="sauces"><img src="images/Sauce jaune.jpeg" alt="Sauce jaune" class="w-full h-48 object-cover"><div class="p-6 flex flex-col flex-grow"><h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">Sauce jaune</h3><div class="flex justify-between items-center mt-auto"><span class="text-black font-bold text-xl">1000 FCFA</span><button class="order-btn btn-primary !py-2 !px-5" data-item-name="Sauce jaune">Commander</button></div></div></div>
+
+            <!-- Desserts -->
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-category="desserts"><img src="https://images.pexels.com/photos/1362534/pexels-photo-1362534.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Glace" class="w-full h-48 object-cover"><div class="p-6 flex flex-col flex-grow"><h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">Glace</h3><div class="flex justify-between items-center mt-auto"><span class="text-black font-bold text-xl">1000 FCFA</span><button class="order-btn btn-primary !py-2 !px-5" data-item-name="Glace">Commander</button></div></div></div>
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-category="desserts"><img src="https://images.pexels.com/photos/2373520/pexels-photo-2373520.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Yaourt nature" class="w-full h-48 object-cover"><div class="p-6 flex flex-col flex-grow"><h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">Yaourt nature</h3><div class="flex justify-between items-center mt-auto"><span class="text-black font-bold text-xl">1000 FCFA</span><button class="order-btn btn-primary !py-2 !px-5" data-item-name="Yaourt nature">Commander</button></div></div></div>
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-category="desserts"><img src="images/Yaourt aromatisé.jpeg" alt="Yaourt aromatisé" class="w-full h-48 object-cover"><div class="p-6 flex flex-col flex-grow"><h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">Yaourt aromatisé</h3><div class="flex justify-between items-center mt-auto"><span class="text-black font-bold text-xl">1500 FCFA</span><button class="order-btn btn-primary !py-2 !px-5" data-item-name="Yaourt aromatisé">Commander</button></div></div></div>
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-category="desserts"><img src="https://images.pexels.com/photos/1099680/pexels-photo-1099680.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Coupe de fruits" class="w-full h-48 object-cover"><div class="p-6 flex flex-col flex-grow"><h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">Coupe de fruits</h3><div class="flex justify-between items-center mt-auto"><span class="text-black font-bold text-xl">1500 FCFA</span><button class="order-btn btn-primary !py-2 !px-5" data-item-name="Coupe de fruits">Commander</button></div></div></div>
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-category="desserts"><img src="images/Cocktail de fruits.jpeg" alt="Cocktail de fruits" class="w-full h-48 object-cover"><div class="p-6 flex flex-col flex-grow"><h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">Cocktail de fruits</h3><div class="flex justify-between items-center mt-auto"><span class="text-black font-bold text-xl">1500 FCFA</span><button class="order-btn btn-primary !py-2 !px-5" data-item-name="Cocktail de fruits">Commander</button></div></div></div>
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col" data-category="desserts"><img src="images/crepes au chocola.jpeg" alt="Crêpes au chocolat" class="w-full h-48 object-cover"><div class="p-6 flex flex-col flex-grow"><h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">Crêpes au chocolat</h3><div class="flex justify-between items-center mt-auto"><span class="text-black font-bold text-xl">1500 FCFA</span><button class="order-btn btn-primary !py-2 !px-5" data-item-name="Crêpes au chocolat">Commander</button></div></div></div>
+
+            <!-- Boissons (existantes) -->
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-xl" data-category="boissons">
+                <img src="https://images.pexels.com/photos/4113831/pexels-photo-4113831.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Jus de fruit naturel" class="w-full h-48 object-cover">
+                <div class="p-6 flex flex-col flex-grow">
+                  <h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">Jus de fruit naturel</h3>
+                  <div class="flex justify-between items-center mt-auto">
+                    <span class="text-black font-bold text-xl">1500 FCFA</span>
+                    <button class="order-btn btn-primary !py-2 !px-5" data-item-name="Jus de fruit naturel">Commander</button>
+                  </div>
+                </div>
+            </div>
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-xl" data-category="boissons">
+                <img src="images/Castel.jpeg" alt="Castel" class="w-full h-48 object-cover">
+                <div class="p-6 flex flex-col flex-grow">
+                  <h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">Castel</h3>
+                  <div class="flex justify-between items-center mt-auto">
+                    <span class="text-black font-bold text-xl">1000 FCFA</span>
+                    <button class="order-btn btn-primary !py-2 !px-5" data-item-name="Castel">Commander</button>
+                  </div>
+                </div>
+            </div>
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-xl" data-category="boissons">
+                <img src="images/William Peel 12cl.jpeg" alt="William Peel 12cl" class="w-full h-48 object-cover">
+                <div class="p-6 flex flex-col flex-grow">
+                  <h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">William Peel 12cl</h3>
+                  <div class="flex justify-between items-center mt-auto">
+                    <span class="text-black font-bold text-xl">10000 FCFA</span>
+                    <button class="order-btn btn-primary !py-2 !px-5" data-item-name="William Peel 12cl">Commander</button>
+                  </div>
+                </div>
+            </div>
+            <div class="menu-item bg-white rounded-lg shadow-lg overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-xl" data-category="boissons">
+                <img src="images/Chivas Regal 12cl.jpeg" alt="Chivas Regal 12cl" class="w-full h-48 object-cover">
+                <div class="p-6 flex flex-col flex-grow">
+                  <h3 class="text-2xl mb-2 text-black" style="font-family: 'Pacifico', cursive;">Chivas Regal 12cl</h3>
+                  <div class="flex justify-between items-center mt-auto">
+                    <span class="text-black font-bold text-xl">15000 FCFA</span>
+                    <button class="order-btn btn-primary !py-2 !px-5" data-item-name="Chivas Regal 12cl">Commander</button>
+                  </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="mt-12 text-center">
+          <button id="voir-plus-btn" class="bg-primary-blue hover:bg-blue-800 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-300" data-translate-key="restaurant_see_more">Voir plus</button>
+        </div>
+      </div>
+    </section>
+
+    
+
+    <!-- Galerie Section -->
+    <section class="py-16  px-4 scroll-reveal">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12 text-[#030303]" data-translate-key="restaurant_gallery_title">Notre Galerie</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <div class="overlay"><i class="fas fa-search-plus"></i></div>
+                    <img src="images/gallery-5.jpg" alt="Vue du restaurant" class="w-full h-full object-cover">
+                </div>
+                <div class="gallery-item">
+                    <div class="overlay"><i class="fas fa-search-plus"></i></div>
+                    <img src="images/gallery-3.jpg" alt="Plat savoureux" class="w-full h-full object-cover">
+                </div>
+                <div class="gallery-item">
+                    <div class="overlay"><i class="fas fa-search-plus"></i></div>
+                    <img src="images/featured-box-bg-1.jpg" alt="Autre plat" class="w-full h-full object-cover">
+                </div>
+                <div class="gallery-item">
+                    <div class="overlay"><i class="fas fa-search-plus"></i></div>
+                    <img src="images/gallery-1.jpg" alt="Intérieur du restaurant" class="w-full h-full object-cover">
+                </div>
+                <div class="gallery-item">
+                    <div class="overlay"><i class="fas fa-search-plus"></i></div>
+                    <img src="images/poulet grie.jpeg" alt="Ambiance du restaurant" class="w-full h-full object-cover">
+                </div>
+                <div class="gallery-item">
+                    <div class="overlay"><i class="fas fa-search-plus"></i></div>
+                    <img src="images/menu-slider-lunch.png" alt="Détail plat" class="w-full h-full object-cover">
+                </div>
+                <div class="gallery-item">
+                    <div class="overlay"><i class="fas fa-search-plus"></i></div>
+                    <img src="images/menu-slider-dinner.png "alt="Vue du restaurant" class="w-full h-full object-cover">
+                </div>
+                <div class="gallery-item">
+                    <div class="overlay"><i class="fas fa-search-plus"></i></div>
+                    <img src="images/find-a-table.png" alt="Plat savoureux" class="w-full h-full object-cover">
+                </div>
+                <div class="gallery-item">
+                    <div class="overlay"><i class="fas fa-search-plus"></i></div>
+                    <img src="images/product-2b.jpg" alt="Autre plat" class="w-full h-full object-cover">
+                </div>
+                <div class="gallery-item">
+                    <div class="overlay"><i class="fas fa-search-plus"></i></div>
+                    <img src="images/Riz au poisson.jpeg" alt="Autre plat" class="w-full h-full object-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- Localisation -->
+    <section class="py-16 bg-white px-4 scroll-reveal">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12 text-[#030303]" data-translate-key="accommodation_location_title">Notre Emplacement</h2>
+            <div class="w-full h-[450px] rounded-lg shadow-lg overflow-hidden">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3909.580206151771!2d16.0655668740689!3d8.564999699999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x10e73f87475c4427%3A0xd4c75bc02a02990a!2sKemdeholo%20Restaurannt!5e0!3m2!1sfr!2sfr!4v1721234567890!5m2!1sfr!2sfr" 
+                    width="100%" 
+                    height="100%" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    
+
+    <!-- Modal de Commande -->
+    <div id="orderModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="order-modal-title">
+        <div class="bg-white rounded-lg shadow-xl p-6 md:p-8 max-w-md w-full">
+            <div class="flex justify-between items-start mb-4">
+                <h3 id="order-modal-title" class="text-2xl font-bold text-[#004aad]">Passer une commande</h3>
+                <button id="closeModalBtn" class="text-gray-500 hover:text-gray-800 text-3xl leading-none">&times;</button>
+            </div>
+            <p class="mb-6">Vous êtes sur le point de commander : <strong id="modalItemName" class="text-[#c32e27]"></strong></p>
+            <form id="orderForm">
+                <div class="mb-4">
+                    <label for="quantity" class="block text-gray-700 mb-2 font-semibold">Quantité</label>
+                    <input type="number" id="quantity" name="quantity" value="1" min="1" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#004aad]">
+                </div>
+                <div class="mb-4">
+                    <label for="customerName" class="block text-gray-700 mb-2 font-semibold">Votre Nom</label>
+                    <input type="text" id="customerName" name="customerName" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#004aad]" autocomplete="name">
+                </div>
+                <div class="mb-6">
+                    <label for="customerPhone" class="block text-gray-700 mb-2 font-semibold">Votre Téléphone</label>
+                    <input type="tel" id="customerPhone" name="customerPhone" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#004aad]" autocomplete="tel">
+                </div>
+                <button type="submit" class="w-full bg-primary-blue hover:bg-blue-800 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-300">Confirmer la commande</button>
+            </form>
+        </div>
+    </div>
+
+        <footer id="main-footer"></footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+    <script src="main.js"></script>
+
+    <script src="script.js"></script>
+    <script src="translations.js"></script>
+    <script src="language.js"></script>
+    <script>
+      // Logique spécifique à la page restaurant (menu statique)
+      document.addEventListener('DOMContentLoaded', () => {
+        const menuItems = document.querySelectorAll('#menu-grid .menu-item');
+        const filterButtons = document.querySelectorAll('#menu-filters .filter-btn');
+        const voirPlusBtn = document.getElementById('voir-plus-btn');
+        const itemsPerLoad = 6;
+        const orderModal = document.getElementById('orderModal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const orderBtns = document.querySelectorAll('.order-btn');
+        const modalItemName = document.getElementById('modalItemName');
+
+        const updateMenuVisibility = (activeCategory = 'all') => {
+          let visibleItems = [];
+          menuItems.forEach(item => {
+            const itemCategory = item.dataset.category;
+            if (activeCategory === 'all' || itemCategory === activeCategory) {
+              visibleItems.push(item);
+              item.classList.remove('hidden');
+            } else {
+              item.classList.add('hidden');
+            }
+          });
+
+          // Gérer le bouton "Voir plus"
+          if (activeCategory !== 'all' || visibleItems.length <= itemsPerLoad) {
+            // Si on filtre ou s'il y a 6 plats ou moins, on cache "Voir plus" et on montre tout
+            visibleItems.forEach(item => item.classList.remove('hidden'));
+            voirPlusBtn.classList.add('hidden');
+          } else {
+            // Cas initial "Tous" avec plus de 6 plats
+            visibleItems.forEach((item, index) => {
+              if (index >= itemsPerLoad) {
+                item.classList.add('hidden');
+              }
+            });
+            voirPlusBtn.classList.remove('hidden');
+          }
+        };
+
+        // Logique des filtres
+        filterButtons.forEach(button => {
+          button.addEventListener('click', () => {
+            // Mettre à jour le bouton actif
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+
+            const category = button.dataset.category;
+            updateMenuVisibility(category);
+          });
+        });
+
+        voirPlusBtn.addEventListener('click', () => {
+          // Afficher tous les éléments quand on clique sur "Voir plus"
+          menuItems.forEach(item => item.classList.remove('hidden'));
+          voirPlusBtn.classList.add('hidden');
+        });
+
+        // Affichage initial
+        updateMenuVisibility('all');
+
+        // Logique de la modale de commande
+        const openModal = (itemName) => {
+          modalItemName.textContent = itemName;
+          orderModal.classList.remove('hidden');
+          orderModal.classList.add('flex');
+        };
+
+        const closeModal = () => {
+          orderModal.classList.add('hidden');
+          orderModal.classList.remove('flex');
+        };
+
+        orderBtns.forEach(button => {
+          button.addEventListener('click', () => {
+            const itemName = button.dataset.itemName;
+            openModal(itemName);
+          });
+        });
+
+        closeModalBtn.addEventListener('click', closeModal);
+
+        orderModal.addEventListener('click', (e) => {
+          if (e.target === orderModal) {
+            closeModal();
+          }
+        });
+
+        document.getElementById('orderForm').addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const itemName = document.getElementById('modalItemName').textContent;
+          const quantity = document.getElementById('quantity').value;
+          const customerName = document.getElementById('customerName').value;
+          const customerPhone = document.getElementById('customerPhone').value;
+
+          try {
+            const response = await fetch('/api/orders', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ itemName, quantity, customerName, customerPhone })
+            });
+            const result = await response.json();
+            if (!response.ok) throw new Error(result.error || 'Une erreur est survenue.');
+            
+            alert('Merci pour votre commande ! Nous vous contacterons bientôt pour la confirmation.');
+            // Envoyer un signal à la page admin pour rafraîchir la liste des commandes
+            localStorage.setItem('refreshAdminData', 'orders_' + Date.now());
+            closeModal();
+          } catch (error) {
+            alert(`Erreur: ${error.message}`);
+          }
+        });
+
+        chargerTemoignages('Restaurant');
+      });
+    </script>
+</body>
+</html>
+
+    

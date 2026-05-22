@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - KemdeHolo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Nouveau style pour la page d'administration */
+    body {
+      background-color: #f3f4f6; /* bg-gray-100 */
+      color: #1f2937; /* text-gray-800 */
+      font-family: 'Inter', sans-serif;
+    }
+
+    header {
+      background-color: #ffffff;
+      border-bottom: 1px solid #e5e7eb; /* border-gray-200 */
+    }
+
+    main h1, main h2 {
+      color: #111827; /* text-gray-900 */
+    }
+
+    section {
+      background-color: #ffffff;
+      border-radius: 0.75rem; /* rounded-xl */
+      padding: 1.5rem; /* p-6 */
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    }
+
+    /* Style des formulaires */
+    form {
+      background-color: #f9fafb; /* bg-gray-50 */
+      border: 1px solid #e5e7eb;
+    }
+
+    input[type="text"],
+    input[type="search"],
+    input[type="password"],
+    textarea,
+    select {
+      background-color: #ffffff;
+      color: #1f2937;
+      border: 1px solid #d1d5db; /* border-gray-300 */
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: #004aad; /* primary-blue */
+      box-shadow: 0 0 0 2px rgba(0, 74, 173, 0.2);
+      outline: none;
+    }
+
+    /* Style des boutons */
+    button[type="submit"], .btn-primary {
+      background-color: #004aad; /* primary-blue */
+      color: #ffffff;
+      font-weight: 600;
+      border-radius: 0.5rem;
+      transition: background-color 0.2s;
+    }
+    button[type="submit"]:hover, .btn-primary:hover {
+      background-color: #003a8c;
+    }
+
+    .btn-secondary {
+      background-color: #e5e7eb; /* bg-gray-200 */
+      color: #1f2937;
+      font-weight: 600;
+      border-radius: 0.5rem;
+      transition: background-color 0.2s;
+    }
+    .btn-secondary:hover {
+      background-color: #d1d5db;
+    }
+
+    .btn-danger {
+      background-color: #ef4444; /* bg-red-500 */
+      color: #ffffff;
+    }
+    .btn-danger:hover {
+      background-color: #dc2626; /* bg-red-600 */
+    }
+
+    /* Style des tables */
+    table {
+      background-color: #ffffff;
+    }
+    table thead {
+      background-color: #f9fafb; /* bg-gray-50 */
+      color: #374151; /* text-gray-700 */
+      border-bottom: 2px solid #e5e7eb;
+    }
+    table tbody tr:nth-child(even) {
+      background-color: #f9fafb; /* Lignes alternées */
+    }
+    table tbody tr {
+      border-bottom: 1px solid #e5e7eb; /* border-gray-200 */
+    }
+  </style>
+</head>
+<body class="font-sans">
+  <header class="shadow-md sticky top-0 z-50 mb-8">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <span class="text-2xl font-bold text-gray-800">Admin KemdeHolo</span>
+      <a href="index.html" class="btn-secondary px-4 py-2">Retour au site</a>
+    </div>
+  </header>
+  <main class="container mx-auto px-4">
+    <h1 class="text-3xl font-bold mb-6">Gestion du site</h1>
+    <section id="blog-section" class="mb-12">
+      <h2 class="text-2xl font-bold mb-4 flex items-center gap-3"><i class="fas fa-newspaper text-gray-400"></i>Articles de blog</h2>
+      <form id="blog-form" class="flex flex-col gap-4 mb-4 p-4 rounded-lg">
+        <div id="blog-error" class="text-yellow-400 font-bold"></div>
+        <input id="blog-titre" type="text" placeholder="Titre de l'article" required class="w-full px-3 py-2 rounded">
+        <textarea id="blog-contenu" placeholder="Contenu de l'article" required rows="5" class="w-full px-3 py-2 rounded"></textarea>        <input id="blog-image" type="file" accept="image/*" class="w-full px-3 py-2 rounded file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-200 file:text-gray-800 hover:file:bg-gray-300">
+        <input id="blog-image-url" type="hidden">
+        <select id="blog-categorie" required class="w-full px-3 py-2 rounded">
+          <option value="">-- Catégorie --</option>
+          <option value="Cuisine">Cuisine</option>
+          <option value="Tourisme">Tourisme</option>
+          <option value="Formation">Formation</option>
+        </select>
+        <input type="hidden" id="blog-id">
+        <div>
+          <button type="submit" id="blog-submit-btn" class="px-4 py-2">Ajouter l'article</button>
+          <button type="button" id="blog-cancel-btn" class="hidden ml-4 btn-secondary px-4 py-2" onclick="annulerModificationBlog()">Annuler</button>
+        </div>
+      </form>
+      <input type="search" id="search-blog" onkeyup="filterContent('search-blog', 'blog-list', 'li')" placeholder="Rechercher un article..." class="w-full mb-4 px-3 py-2 rounded">
+      <ul id="blog-list" class="mb-8"></ul>
+      <div id="blog-pagination" class="pagination-controls"></div>
+    </section>
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-4 flex items-center gap-3"><i class="fas fa-receipt text-gray-400"></i>Commandes reçues</h2>
+      <input type="search" id="search-orders" onkeyup="filterContent('search-orders', 'orders-table', 'tr')" placeholder="Rechercher une commande..." class="w-full mb-4 px-3 py-2 rounded">
+      <table class="w-full rounded shadow">
+        <thead>
+          <tr>
+            <th class="p-3 text-left">Plat</th>
+            <th class="p-3 text-left">Quantité</th>
+            <th class="p-3 text-left">Client</th>
+            <th class="p-3 text-left">Téléphone</th>
+            <th class="p-3 text-left">Date</th>
+            <th class="p-3 text-left">Statut / Action</th>
+            <th class="p-3 text-left">Action</th>
+          </tr>
+        </thead>
+        <tbody id="orders-table">
+          <!-- Les commandes seront chargées ici -->
+        </tbody>
+      </table>
+      <div id="orders-pagination" class="pagination-controls"></div>
+    </section>
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-4 flex items-center gap-3"><i class="fas fa-inbox text-gray-400"></i>Messages de contact reçus</h2>
+      <input type="search" id="search-contacts" onkeyup="filterContent('search-contacts', 'contacts-table', 'tr')" placeholder="Rechercher un message..." class="w-full mb-4 px-3 py-2 rounded">
+      <table class="w-full rounded shadow">
+        <thead>
+          <tr>
+            <th class="p-3 text-left">Prénom</th>
+            <th class="p-3 text-left">Nom</th>
+            <th class="p-3 text-left">Email</th>
+            <th class="p-3 text-left">Sujet</th>
+            <th class="p-3 text-left">Message</th>
+            <th class="p-3 text-left">Date</th>
+            <th class="p-3 text-left">Action</th>
+          </tr>
+        </thead>
+        <tbody id="contacts-table"></tbody>
+      </table>
+      <div id="contacts-pagination" class="pagination-controls"></div>
+    </section>
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-4 flex items-center gap-3"><i class="fas fa-comments text-gray-400"></i>Commentaires du blog</h2>
+      <input type="search" id="search-comments" onkeyup="filterContent('search-comments', 'comments-table', 'tr')" placeholder="Rechercher un commentaire..." class="w-full mb-4 px-3 py-2 rounded">
+      <table class="w-full rounded shadow">
+        <thead>
+          <tr>
+            <th class="p-3 text-left">Nom</th>
+            <th class="p-3 text-left">Article</th>
+            <th class="p-3 text-left">Commentaire</th>
+            <th class="p-3 text-left">Date</th>
+            <th class="p-3 text-left">Action</th>
+          </tr>
+        </thead>
+        <tbody id="comments-table"></tbody>
+      </table>
+      <div id="comments-pagination" class="pagination-controls"></div>
+    </section>
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-4 flex items-center gap-3"><i class="fas fa-at text-gray-400"></i>Abonnés à la newsletter</h2>
+      <input type="search" id="search-subscribers" onkeyup="filterContent('search-subscribers', 'subscribers-table', 'tr')" placeholder="Rechercher un email..." class="w-full mb-4 px-3 py-2 rounded">
+      <table class="w-full rounded shadow">
+        <thead>
+          <tr>
+            <th class="p-3 text-left">Email</th>
+            <th class="p-3 text-left">Date d'abonnement</th>
+            <th class="p-3 text-left">Action</th>
+          </tr>
+        </thead>
+        <tbody id="subscribers-table"></tbody>
+      </table>
+      <div id="subscribers-pagination" class="pagination-controls"></div>
+    </section>
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-4 flex items-center gap-3"><i class="fas fa-bed text-gray-400"></i>Réservations de chambres</h2>
+      <input type="search" id="search-reservations" onkeyup="filterContent('search-reservations', 'reservations-table', 'tr')" placeholder="Rechercher une réservation..." class="w-full mb-4 px-3 py-2 rounded">
+      <table class="w-full rounded shadow text-sm">
+        <thead>
+          <tr>
+            <th class="p-3 text-left">Client</th>
+            <th class="p-3 text-left">Chambre</th>
+            <th class="p-3 text-left">Arrivée</th>
+            <th class="p-3 text-left">Départ</th>
+            <th class="p-3 text-left">Demandes</th>
+            <th class="p-3 text-left">Date Demande</th>
+            <th class="p-3 text-left">Statut</th>
+            <th class="p-3 text-left">Action</th>
+          </tr>
+        </thead>
+        <tbody id="reservations-table">
+          <!-- Les réservations seront chargées ici -->
+        </tbody>
+      </table>
+      <div id="reservations-pagination" class="pagination-controls"></div>
+    </section>
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-4 flex items-center gap-3"><i class="fas fa-users text-gray-400"></i>Gestion des Membres de l'Équipe</h2>
+      <form id="team-form" class="flex flex-col gap-4 mb-4 p-4 rounded-lg">
+        <input type="hidden" id="team-id">
+        <input type="hidden" id="team-image-url">
+        <input id="team-nom" type="text" placeholder="Nom du membre" required class="w-full px-3 py-2 rounded">
+        <input id="team-role" type="text" placeholder="Rôle" required class="w-full px-3 py-2 rounded">
+        <textarea id="team-description" placeholder="Description" rows="2" class="w-full px-3 py-2 rounded"></textarea>
+        <input id="team-image" type="file" accept="image/*" class="w-full px-3 py-2 rounded file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-200 file:text-gray-800 hover:file:bg-gray-300">
+        <div>
+          <button type="submit" id="team-submit-btn" class="px-4 py-2">Ajouter</button>
+          <button type="button" id="team-cancel-btn" class="hidden ml-4 btn-secondary px-4 py-2" onclick="annulerModificationEquipe()">Annuler</button>
+        </div>
+      </form>
+      <input type="search" id="search-team" onkeyup="filterContent('search-team', 'team-table', 'tr')" placeholder="Rechercher un membre..." class="w-full mb-4 px-3 py-2 rounded">
+      <table class="w-full rounded shadow">
+        <thead>
+          <tr>
+            <th class="p-3 text-left">Nom</th>
+            <th class="p-3 text-left">Rôle</th>
+            <th class="p-3 text-left">Action</th>
+          </tr>
+        </thead>
+        <tbody id="team-table"></tbody>
+      </table>
+      <div id="team-pagination" class="pagination-controls"></div>
+    </section>
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-4 flex items-center gap-3"><i class="fas fa-star text-gray-400"></i>Gestion des Témoignages</h2>
+      <form id="testimonial-form" class="flex flex-col gap-4 mb-4 p-4 rounded-lg">
+        <input type="hidden" id="testimonial-id">
+        <input type="hidden" id="testimonial-image-url">
+        <input id="testimonial-name" type="text" placeholder="Nom du client" required class="w-full px-3 py-2 rounded">
+        <select id="testimonial-category" required class="w-full px-3 py-2 rounded">
+          <option value="">-- Catégorie du témoignage --</option>
+          <option value="Restaurant">Restaurant</option>
+          <option value="Hebergement">Hébergement</option>
+          <option value="Formation">Formation</option>
+          <option value="Blanchisserie">Blanchisserie</option>
+        </select>
+        <textarea id="testimonial-quote" placeholder="Citation du client" required rows="3" class="w-full px-3 py-2 rounded"></textarea>        <input id="testimonial-image" type="file" accept="image/*" class="w-full px-3 py-2 rounded file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-200 file:text-gray-800 hover:file:bg-gray-300">
+        <select id="testimonial-rating" required class="w-full px-3 py-2 rounded">
+          <option value="">-- Note --</option>
+          <option value="5">5 étoiles</option>
+          <option value="4">4 étoiles</option>
+          <option value="3">3 étoiles</option>
+          <option value="2">2 étoiles</option>
+          <option value="1">1 étoile</option>
+        </select>
+        <select id="testimonial-status" class="w-full px-3 py-2 rounded">
+          <option value="approved">Approuvé</option>
+          <option value="pending">En attente</option>
+        </select>
+        <div>
+          <button type="submit" id="testimonial-submit-btn" class="px-4 py-2">Ajouter le témoignage</button>
+          <button type="button" id="testimonial-cancel-btn" class="hidden ml-4 btn-secondary px-4 py-2" onclick="annulerModificationTestimonial()">Annuler</button>
+        </div>
+      </form>
+      <input type="search" id="search-testimonials" onkeyup="filterContent('search-testimonials', 'testimonial-table', 'tr')" placeholder="Rechercher un témoignage..." class="w-full mb-4 px-3 py-2 rounded">
+      <table class="w-full rounded shadow">
+        <thead>
+          <tr>
+            <th class="p-3 text-left">Nom</th>
+            <th class="p-3 text-left">Citation</th>
+            <th class="p-3 text-left">Note</th>
+            <th class="p-3 text-left">Catégorie</th>
+            <th class="p-3 text-left">Statut</th>
+            <th class="p-3 text-left">Action</th>
+          </tr>
+        </thead>
+        <tbody id="testimonial-table">
+          <!-- Les témoignages seront chargés ici -->
+        </tbody>
+      </table>
+      <div id="testimonials-pagination" class="pagination-controls"></div>
+    </section>
+       <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-4 flex items-center gap-3"><i class="fas fa-graduation-cap text-gray-400"></i>Inscriptions à la formation</h2>
+      <input type="search" id="search-formation-registrations" onkeyup="filterContent('search-formation-registrations', 'formation-registrations-table', 'tr')" placeholder="Rechercher une inscription..." class="w-full mb-4 px-3 py-2 rounded">
+      <table class="w-full rounded shadow">
+        <thead>
+          <tr>
+            <th class="p-3 text-left">Nom</th>
+            <th class="p-3 text-left">Email</th>
+            <th class="p-3 text-left">Téléphone</th>
+            <th class="p-3 text-left">Formation</th>
+            <th class="p-3 text-left">Date d'inscription</th>
+            <th class="p-3 text-left">Action</th>
+          </tr>
+        </thead>
+        <tbody id="formation-registrations-table"></tbody>
+      </table>
+      <div id="formationRegistrations-pagination" class="pagination-controls"></div>
+    </section>
+
+</main>
+  <script>
+    // --- CONFIGURATION ET UTILITAIRES ---
+   function getAdminToken() {
+      let token = localStorage.getItem('adminToken') || '';
+      // Si pas de token stocké, demander à l'utilisateur d'en saisir un (pratique en développement)
+      if (!token) {
+        token = prompt("Token admin manquant. Entrez le token admin (celui retourné par /admin/login) :") || '';
+        if (token) localStorage.setItem('adminToken', token);
+      }
+      return `Bearer ${token}`;
+    }
+
+    /**
+     * Affiche un message d'erreur dans un conteneur dédié.
+     * @param {string} containerId - L'ID de l'élément où afficher l'erreur.
+     * @param {string} message - Le message d'erreur à afficher.
+     */
+    function handleApiError(containerId, message) {
+      const errorDiv = document.getElementById(containerId);
+      if (errorDiv) {
+        errorDiv.textContent = message;
+        errorDiv.classList.remove('hidden');
+        setTimeout(() => errorDiv.classList.add('hidden'), 5000);
+      }
+    }
+
+    // --- FONCTION DE RECHERCHE GÉNÉRIQUE ---
+    function filterContent(inputId, containerId, itemSelector) {
+      const input = document.getElementById(inputId);
+      const filter = input.value.toLowerCase();
+      const container = document.getElementById(containerId);
+      const items = container.getElementsByTagName(itemSelector);
+
+      for (let i = 0; i < items.length; i++) {
+        const item = items[i];
+        // S'assurer que l'élément n'est pas une ligne d'en-tête de tableau
+        if (item.getElementsByTagName('th').length > 0) {
+          continue;
+        }
+        const textContent = item.textContent || item.innerText;
+        if (textContent.toLowerCase().indexOf(filter) > -1) {
+          item.style.display = ""; // Rétablit l'affichage par défaut (ex: 'table-row', 'flex', 'list-item')
+        } else {
+          item.style.display = "none";
+        }
+      }
+    }
+
+    // --- GESTION DE LA PAGINATION ---
+    const pageState = {
+      blog: { data: [], currentPage: 1, itemsPerPage: 5, render: renderBlog },
+      orders: { data: [], currentPage: 1, itemsPerPage: 10, render: renderCommandes },
+      contacts: { data: [], currentPage: 1, itemsPerPage: 10, render: renderContacts },
+      comments: { data: [], currentPage: 1, itemsPerPage: 10, render: renderCommentaires },
+      subscribers: { data: [], currentPage: 1, itemsPerPage: 10, render: renderAbonnes },
+      reservations: { data: [], currentPage: 1, itemsPerPage: 5, render: renderReservations },
+      team: { data: [], currentPage: 1, itemsPerPage: 5, render: renderEquipe },
+      testimonials: { data: [], currentPage: 1, itemsPerPage: 5, render: renderTestimonials },
+            formationRegistrations: { data: [], currentPage: 1, itemsPerPage: 10, render: renderFormationRegistrations },
+    };
+
+    function renderPaginationControls(section, totalItems) {
+      const { currentPage, itemsPerPage } = pageState[section];
+      const totalPages = Math.ceil(totalItems / itemsPerPage);
+      const container = document.getElementById(`${section}-pagination`);
+      if (!container || totalPages <= 1) {
+        if(container) container.innerHTML = '';
+        return;
+      }
+
+      let html = '<div class="flex justify-center items-center gap-2 mt-4">';
+      // Bouton Précédent
+      html += `<button onclick="changePage('${section}', ${currentPage - 1})" class="px-3 py-1 rounded-md bg-white text-black font-bold ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-opacity-80'}" ${currentPage === 1 ? 'disabled' : ''}>Précédent</button>`;
+
+      // Numéros de page
+      for (let i = 1; i <= totalPages; i++) {
+        html += `<button onclick="changePage('${section}', ${i})" class="px-3 py-1 rounded-md font-bold ${i === currentPage ? 'bg-white/30 text-white' : 'bg-white text-black hover:bg-opacity-80'}">${i}</button>`;
+      }
+
+      // Bouton Suivant
+      html += `<button onclick="changePage('${section}', ${currentPage + 1})" class="px-3 py-1 rounded-md bg-white text-black font-bold ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:bg-opacity-80'}" ${currentPage === totalPages ? 'disabled' : ''}>Suivant</button>`;
+      html += '</div>';
+      container.innerHTML = html;
+    }
+
+    function changePage(section, newPage) {
+      pageState[section].currentPage = newPage;
+      // Chaque section a sa propre fonction pour redessiner ses données
+      const state = pageState[section];
+      if (state && typeof state.render === 'function') {
+        state.render();
+      }
+    }
+
+    function getPaginatedData(section) {
+        const { data, currentPage, itemsPerPage } = pageState[section];
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        return data.slice(startIndex, endIndex);
+    }
+
+    // --- Gestion du Blog ---
+    async function chargerBlog() {
+      const res = await fetch('/admin/blog', { headers: { 'Authorization': getAdminToken() } });
+      if (res.status === 403) { window.location.href = 'admin-login.html'; return; }
+      
+      try { // Correction du bloc try-catch
+        if (!res.ok) { // Gestion d'erreur améliorée
+          throw new Error(`Erreur HTTP: ${res.status}`);
+        }
+        pageState.blog.data = await res.json();
+        pageState.blog.currentPage = 1;
+        renderBlog();
+      } catch (err) {
+        console.error('Erreur lors du chargement du blog:', err);
+        document.getElementById('blog-list').innerHTML = `<li class="text-red-500">Erreur lors du chargement des articles: ${err.message}</li>`;
+      }
+    }
+
+    function renderBlog() {
+        const ul = document.getElementById('blog-list');
+        const paginatedData = getPaginatedData('blog');
+        if (paginatedData && paginatedData.length > 0) {
+          ul.innerHTML = paginatedData.map(a => `
+            <li class="mb-4 p-4 bg-gray-50 rounded-lg shadow-sm border flex justify-between items-start" id="article-${a.id}">
+                <div>
+                    <h3 class="text-xl font-bold">${a.titre}</h3>
+                    <p class="text-sm text-gray-500">Catégorie: ${a.categorie || 'Non classé'} | Publié le: ${new Date(a.date || a.createdAt).toLocaleDateString()}</p>
+                    <p class="mt-2">${(a.contenu || '').substring(0, 150)}...</p>
+                </div>
+                <div class="flex-shrink-0 ml-4">
+                    <button onclick="modifierBlog(${a.id})" class="bg-white text-black px-3 py-1 rounded-md text-sm hover:bg-opacity-90 transition-colors font-bold mr-2">Modifier</button>
+                    <button onclick="supprimerBlog(${a.id})" class="bg-white text-black px-3 py-1 rounded-md text-sm hover:bg-opacity-90 transition-colors font-bold">Supprimer</button>
+                </div>
+            </li>
+          `).join('');
+        } else {
+          ul.innerHTML = '<li class="text-gray-500">Aucun article de blog trouvé.</li>';
+        }
+        renderPaginationControls('blog', pageState.blog.data.length);
+    }
+
+    async function sauvegarderBlog(e) {
+      e.preventDefault();
+      const id = document.getElementById('blog-id').value;
+      const formData = new FormData();
+      formData.append('titre', document.getElementById('blog-titre').value);
+      formData.append('contenu', document.getElementById('blog-contenu').value);
+      formData.append('categorie', document.getElementById('blog-categorie').value);
+      
+      const imageFile = document.getElementById('blog-image').files[0];
+      if (imageFile) {
+        formData.append('image', imageFile);
+      } else if (id) {
+        formData.append('image_url', document.getElementById('blog-image-url').value);
+      }
+
+      const method = id ? 'PUT' : 'POST';
+      const url = id ? `/admin/blog/${id}` : '/admin/blog';
+
+      try {
+          const res = await fetch(url, {
+              method: method,
+              headers: { 'Authorization': getAdminToken() }, // Pas de 'Content-Type', le navigateur le mettra pour FormData
+              body: formData
+          });
+
+          if (!res.ok) {
+              const errorData = await res.json();
+              handleApiError('blog-error', errorData.error || 'Erreur inconnue lors de la sauvegarde.');
+              return;
+          }
+
+          annulerModificationBlog();
+          chargerBlog();
+      } catch (error) {
+          afficherErreurBlog('Erreur réseau ou serveur injoignable.');
+      }
+    }
+
+
+    async function modifierBlog(id) {
+      const res = await fetch(`/admin/blog/${id}`, { headers: { 'Authorization': getAdminToken() } });
+      if (!res.ok) return alert("Impossible de charger l'article.");
+      const article = await res.json();
+      
+      document.getElementById('blog-id').value = article.id;
+      document.getElementById('blog-titre').value = article.titre;
+      document.getElementById('blog-contenu').value = article.contenu;
+      document.getElementById('blog-image').value = ''; // On ne peut pas pré-remplir un input file
+      document.getElementById('blog-image-url').value = article.image; // On stocke l'URL actuelle
+      document.getElementById('blog-categorie').value = article.categorie;
+
+      document.getElementById('blog-submit-btn').textContent = 'Mettre à jour';
+      document.getElementById('blog-cancel-btn').classList.remove('hidden');
+      document.getElementById('blog-form').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function annulerModificationBlog() {
+      document.getElementById('blog-form').reset();
+      document.getElementById('blog-id').value = '';
+      document.getElementById('blog-submit-btn').textContent = 'Ajouter l\'article';
+      document.getElementById('blog-cancel-btn').classList.add('hidden');
+      document.getElementById('blog-image-url').value = '';
+      document.getElementById('blog-error').textContent = '';
+    }
+
+    async function supprimerBlog(id) {
+      if (!confirm('Voulez-vous vraiment supprimer cet article ?')) return;
+      try {
+        const res = await fetch(`/admin/blog/${id}`, { 
+          method: 'DELETE', 
+          headers: { 'Authorization': getAdminToken(), 'Content-Type': 'application/json' } 
+        });
+
+        if (res.ok) {
+          chargerBlog();
+        } else {
+          alert("Erreur lors de la suppression de l'article.");
+        }
+      } catch (err) {
+        alert("Erreur réseau.");
+      }
+    }
+    document.getElementById('blog-form').addEventListener('submit', sauvegarderBlog);
+
+    // --- RAFRAÎCHISSEMENT AUTOMATIQUE DE LA PAGE ADMIN ---
+    // Écoute les changements dans le localStorage faits par d'autres onglets
+    window.addEventListener('storage', function(e) {
+      if (e.key === 'refreshAdminData') {
+        if (e.newValue.startsWith('subscribers')) {
+          console.log('Rafraîchissement des abonnés demandé...');
+          chargerAbonnes();
+        } else if (e.newValue.startsWith('contacts')) {
+          console.log('Rafraîchissement des contacts demandé...');
+          chargerContacts();
+        } else if (e.newValue.startsWith('orders')) {
+          console.log('Rafraîchissement des commandes demandé...');
+          chargerCommandes();
+        } else if (e.newValue.startsWith('reservations')) {
+          console.log('Rafraîchissement des réservations demandé...');
+          chargerReservations();
+        }
+      }
+    });
+    // --- Gestion des Contacts ---
+    async function chargerContacts() {
+      try {
+        const res = await fetch('/admin/contacts', { headers: { 'Authorization': getAdminToken() } });
+        if (res.status === 403) { window.location.href = 'admin-login.html'; return; }
+        pageState.contacts.data = await res.json();
+        pageState.contacts.currentPage = 1;
+        renderContacts();
+      } catch (err) {
+        console.error("Erreur contacts:", err);
+      }
+    }
+
+    function renderContacts() {
+      const tbody = document.getElementById('contacts-table');
+      const paginatedData = getPaginatedData('contacts');
+
+      if (paginatedData && paginatedData.length > 0) {
+        tbody.innerHTML = paginatedData.map((c, index) => `
+          <tr>
+            <td class="p-3">${c.prenom || ''}</td>
+            <td class="p-3">${c.nom}</td>
+            <td class="p-3">${c.email}</td>
+            <td class="p-3">${c.sujet || ''}</td>
+            <td class="p-3">${c.message}</td>
+            <td class="p-3">${new Date(c.createdAt).toLocaleString()}</td>
+            <td class="p-3"><button onclick="supprimerContact(${c.id})" class="bg-white text-black px-3 py-1 rounded-md text-sm hover:bg-opacity-90 transition-colors font-bold">Supprimer</button></td>
+          </tr>
+        `).join('');
+      } else {
+        tbody.innerHTML = '<tr><td colspan="7" class="p-3 text-center text-gray-500">Aucun message de contact.</td></tr>';
+      }
+      renderPaginationControls('contacts', pageState.contacts.data.length);
+    }
+    async function supprimerContact(id) {
+      if (!confirm('Voulez-vous vraiment supprimer ce message ?')) return;
+      try {
+        const res = await fetch(`/admin/contacts/${id}`, { 
+          method: 'DELETE', 
+          headers: { 'Authorization': getAdminToken(), 'Content-Type': 'application/json' } 
+        });
+        if (res.ok) {
+          chargerContacts();
+        } else {
+          alert("Erreur lors de la suppression du message.");
+        }
+      } catch (err) {
+        alert("Erreur réseau.");
+      }
+    }
+
+    // --- Gestion des Abonnés ---
+    async function chargerAbonnes() {
+      try {
+        const res = await fetch('/admin/subscribers', { headers: { 'Authorization': getAdminToken() } });
+        if (res.status === 403) { window.location.href = 'admin-login.html'; return; }
+        pageState.subscribers.data = await res.json();
+        pageState.subscribers.currentPage = 1;
+        renderAbonnes();
+      } catch (err) {
+        console.error("Erreur abonnés:", err);
+      }
+    }
+
+    function renderAbonnes() {
+      const tbody = document.getElementById('subscribers-table');
+      const paginatedData = getPaginatedData('subscribers');
+      if (paginatedData && paginatedData.length > 0) {
+        tbody.innerHTML = paginatedData.map((s, index) => `
+          <tr>
+            <td class="p-3">${s.email}</td>
+            <td class="p-3">${new Date(s.date).toLocaleString()}</td>
+            <td class="p-3"><button onclick="supprimerAbonne(${s.id})" class="bg-white text-black px-3 py-1 rounded-md text-sm hover:bg-opacity-90 transition-colors font-bold">Supprimer</button></td>
+          </tr>
+        `).join('');
+      } else {
+        tbody.innerHTML = '<tr><td colspan="3" class="p-3 text-center text-gray-500">Aucun abonné trouvé.</td></tr>';
+      }
+      renderPaginationControls('subscribers', pageState.subscribers.data.length);
+    }
+
+    async function supprimerAbonne(id) {
+      if (!confirm('Voulez-vous vraiment supprimer cet abonné ?')) return;
+      try {
+        const res = await fetch(`/admin/subscribers/${id}`, { 
+          method: 'DELETE', 
+          headers: { 'Authorization': getAdminToken(), 'Content-Type': 'application/json' } 
+        });
+        if (res.ok) {
+          chargerAbonnes();
+        } else {
+          alert("Erreur lors de la suppression de l'abonné.");
+        }
+      } catch (err) {
+        alert("Erreur réseau.");
+      }
+    }
+
+    // --- Gestion des Commentaires ---
+    async function chargerCommentaires() {
+        const tbody = document.getElementById('comments-table');
+        try {
+            const res = await fetch('/admin/comments', { headers: { 'Authorization': getAdminToken() } });
+            if (res.status === 403) { window.location.href = 'admin-login.html'; return; }
+            pageState.comments.data = await res.json();
+            pageState.comments.currentPage = 1;
+            renderCommentaires();
+        } catch (err) {
+            tbody.innerHTML = '<tr><td colspan="5" class="p-3 text-center text-gray-500">Impossible de charger les commentaires.</td></tr>';
+        }
+    }
+    function renderCommentaires() {
+        const tbody = document.getElementById('comments-table');
+        const paginatedData = getPaginatedData('comments');
+        if (paginatedData && paginatedData.length > 0) {
+            tbody.innerHTML = paginatedData.map((c, index) => `
+                  <tr>
+                      <td class="p-3">${c.name || 'Anonyme'}</td>
+                      <td class="p-3">${c.Blog ? `<a href="blog-article.html?id=${c.Blog.id}" target="_blank" class="text-blue-600 hover:underline">${c.Blog.titre.substring(0, 30)}...</a>` : 'Article supprimé'}</td>
+                      <td class="p-3">${c.text || ''}</td>
+                      <td class="p-3">${new Date(c.date).toLocaleString()}</td>
+                      <td class="p-3"><button onclick="supprimerCommentaire(${c.id})" class="bg-white text-black px-3 py-1 rounded-md text-sm hover:bg-opacity-90 transition-colors font-bold">Supprimer</button></td>
+                  </tr>
+              `).join('');
+        } else {
+            tbody.innerHTML = '<tr><td colspan="5" class="p-3 text-center text-gray-500">Aucun commentaire.</td></tr>';
+        }
+        renderPaginationControls('comments', pageState.comments.data.length);
+    }
+    async function supprimerCommentaire(id) {
+      if (!confirm('Voulez-vous vraiment supprimer ce commentaire ?')) return;
+      try {
+        const res = await fetch(`/admin/comments/${id}`, { 
+          method: 'DELETE', 
+          headers: { 'Authorization': getAdminToken(), 'Content-Type': 'application/json' } 
+        });
+        if (res.ok) {
+          chargerCommentaires();
+        } else {
+          alert("Erreur lors de la suppression du commentaire.");
+        }
+      } catch (err) {
+        alert("Erreur réseau.");
+      }
+    }
+
+    // --- Gestion des Réservations ---
+    async function chargerReservations() {
+      const tbody = document.getElementById('reservations-table');
+      try {
+        const res = await fetch('/admin/reservations', { headers: { 'Authorization': getAdminToken() } });
+        if (!res.ok) throw new Error('Erreur serveur');
+        pageState.reservations.data = await res.json();
+        pageState.reservations.currentPage = 1;
+        renderReservations();
+      } catch (err) {
+        tbody.innerHTML = '<tr><td colspan="8" class="p-3 text-center text-yellow-500">Impossible de charger les réservations.</td></tr>';
+      }
+    }
+
+    function renderReservations() {
+        const tbody = document.getElementById('reservations-table');
+        const paginatedData = getPaginatedData('reservations');
+        if (!paginatedData || paginatedData.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="8" class="p-3 text-center text-gray-500">Aucune réservation pour le moment.</td></tr>';
+          return;
+        }
+        tbody.innerHTML = paginatedData.map((r, index) => {
+          const statusColor = r.status === 'Confirmée' ? 'text-green-400' : (r.status === 'Annulée' ? 'text-gray-500' : 'text-yellow-400');
+          return `
+            <tr>
+              <td class="p-3"><strong>${r.customerName}</strong><br>${r.customerEmail}<br>${r.customerPhone || ''}</td>
+              <td class="p-3">${r.roomType} (${r.adults} ad.)</td>
+              <td class="p-3">${new Date(r.arrivalDate).toLocaleDateString()}</td>
+              <td class="p-3">${new Date(r.departureDate).toLocaleDateString()}</td>
+              <td class="p-3 text-xs">${r.specialRequests || 'Aucune'}</td>
+              <td class="p-3 text-xs">${new Date(r.createdAt).toLocaleString()}</td>
+              <td class="p-3 font-bold">
+                <select onchange="changerStatutReservation(${r.id}, this.value)" class="p-1 border rounded text-sm ${statusColor}">
+                    <option value="En attente" ${r.status === 'En attente' ? 'selected' : ''}>En attente</option>
+                    <option value="Confirmée" ${r.status === 'Confirmée' ? 'selected' : ''}>Confirmée</option>
+                    <option value="Annulée" ${r.status === 'Annulée' ? 'selected' : ''}>Annulée</option>
+                </select>
+              </td>
+              <td class="p-3"><button onclick="supprimerReservation(${r.id})" class="bg-white text-black px-3 py-1 rounded-md text-sm hover:bg-opacity-90 transition-colors font-bold">Supprimer</button></td>
+            </tr>
+          `;
+        }).join('');
+        renderPaginationControls('reservations', pageState.reservations.data.length);
+    }
+
+    async function changerStatutReservation(id, status) {
+      await fetch(`/admin/reservations/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'Authorization': getAdminToken() },
+        body: JSON.stringify({ status })
+      });
+      chargerReservations();
+    }
+
+    async function supprimerReservation(id) {
+      if (!confirm('Vraiment supprimer cette réservation ?')) return;
+      try {
+        const res = await fetch(`/admin/reservations/${id}`, { 
+          method: 'DELETE', 
+          headers: { 'Authorization': getAdminToken(), 'Content-Type': 'application/json' } 
+        });
+        if (res.ok) {
+          chargerReservations();
+        } else {
+          alert("Erreur lors de la suppression de la réservation.");
+        }
+      } catch (err) {
+        alert("Erreur réseau.");
+      }
+    }
+
+    // --- Gestion des Commandes ---
+    async function chargerCommandes() {
+      const tbody = document.getElementById('orders-table');
+      try {
+        const response = await fetch('/admin/orders', { headers: { 'Authorization': getAdminToken() } });
+        if (!response.ok) {
+          throw new Error(`Erreur HTTP: ${response.status}`);
+        }
+        pageState.orders.data = await response.json();
+        pageState.orders.currentPage = 1;
+        renderCommandes();
+      } catch (err) {
+        console.error("Erreur lors du chargement des commandes:", err);
+        tbody.innerHTML = `<tr><td colspan="7" class="p-3 text-center text-yellow-500">Impossible de charger les commandes. Raison: ${err.message}</td></tr>`;
+      }
+    }
+
+    function renderCommandes() {
+        const tbody = document.getElementById('orders-table');
+        const paginatedData = getPaginatedData('orders');
+        if (!paginatedData || paginatedData.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="7" class="p-3 text-center text-gray-500">Aucune commande pour le moment.</td></tr>';
+          return;
+        }
+        tbody.innerHTML = paginatedData.map((order, index) => {
+          const statusColor = order.status === 'Terminée' ? 'text-green-400' : (order.status === 'Annulée' ? 'text-gray-500' : 'text-yellow-400');
+          return `
+            <tr>
+              <td class="p-3">${order.itemName || 'N/A'}</td>
+              <td class="p-3">${order.quantity || 1}</td>
+              <td class="p-3">${order.customerName || 'N/A'}</td>
+              <td class="p-3">${order.customerPhone || 'N/A'}</td>
+              <td class="p-3">${new Date(order.createdAt).toLocaleString('fr-FR')}</td>
+              <td class="p-3">
+                <div class="flex items-center gap-2">
+                  <select onchange="changerStatutCommande(${order.id}, this.value)" class="p-1 border rounded text-sm ${statusColor}">
+                      <option value="En attente" ${order.status === 'En attente' ? 'selected' : ''}>En attente</option>
+                      <option value="Terminée" ${order.status === 'Terminée' ? 'selected' : ''}>Terminée</option>
+                      <option value="Annulée" ${order.status === 'Annulée' ? 'selected' : ''}>Annulée</option>
+                  </select>
+                </div>
+              </td>
+              <td class="p-3"><button onclick="supprimerCommande(${order.id})" class="bg-white text-black px-3 py-1 rounded-md text-sm hover:bg-opacity-90 transition-colors font-bold">Supprimer</button></td>
+            </tr>
+          `;
+        }).join('');
+        renderPaginationControls('orders', pageState.orders.data.length);
+    }
+
+    async function changerStatutCommande(id, status) {
+      await fetch(`/admin/orders/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'Authorization': getAdminToken() },
+        body: JSON.stringify({ status })
+      });
+      // On recharge la liste pour voir le changement de statut
+      chargerCommandes();
+    }
+
+    async function supprimerCommande(id) {
+      if (!confirm('Voulez-vous vraiment supprimer cette commande ?')) return;
+      try {
+        const res = await fetch(`/admin/orders/${id}`, { 
+          method: 'DELETE', 
+          headers: { 'Authorization': getAdminToken(), 'Content-Type': 'application/json' } 
+        });
+        if (res.ok) {
+          chargerCommandes();
+        } else {
+          alert("Erreur lors de la suppression de la commande.");
+        }
+      } catch (err) {
+        alert("Erreur réseau.");
+      }
+    }
+
+    // --- Gestion de l'Équipe ---
+    async function chargerEquipe() {
+      const tbody = document.getElementById('team-table');
+      try {
+        const res = await fetch('/admin/team', { headers: { 'Authorization': getAdminToken() } });
+        if (!res.ok) throw new Error(`Erreur HTTP: ${res.status}`);
+        pageState.team.data = await res.json();
+        pageState.team.currentPage = 1;
+        renderEquipe();
+      } catch (err) {
+        console.error("Erreur lors du chargement de l'équipe:", err);
+        tbody.innerHTML = '<tr><td colspan="3" class="p-3 text-center text-yellow-500">Impossible de charger les membres de l\'équipe.</td></tr>';
+      }
+    }
+    function renderEquipe() {
+        const tbody = document.getElementById('team-table');
+        const paginatedData = getPaginatedData('team');
+        tbody.innerHTML = paginatedData.map((m) => `
+          <tr>
+            <td class="p-3">${m.nom}</td>
+            <td class="p-3">${m.role}</td>
+            <td class="p-3">
+              <button onclick="modifierMembre(${m.id})" class="bg-white text-black px-3 py-1 rounded-md text-sm hover:bg-opacity-90 transition-colors font-bold mr-2">Modifier</button>
+              <button onclick="supprimerMembre(${m.id})" class="bg-white text-black px-3 py-1 rounded-md text-sm hover:bg-opacity-90 transition-colors font-bold">Supprimer</button>
+            </td>
+          </tr>`).join('');
+        renderPaginationControls('team', pageState.team.data.length);
+    }
+    async function sauvegarderMembre(e) {
+      e.preventDefault();
+      const id = document.getElementById('team-id').value;
+      const formData = new FormData();
+      formData.append('nom', document.getElementById('team-nom').value);
+      formData.append('role', document.getElementById('team-role').value);
+      formData.append('description', document.getElementById('team-description').value);
+
+      const imageFile = document.getElementById('team-image').files[0];
+      if (imageFile) {
+        formData.append('image', imageFile);
+      } else if (id) {
+        formData.append('image_url', document.getElementById('team-image-url').value);
+      }
+      const res = await fetch(id ? `/admin/team/${id}` : '/admin/team', { method: id ? 'PUT' : 'POST', headers: { 'Authorization': getAdminToken() }, body: formData });
+      
+      if (res.ok) {
+        annulerModificationEquipe();
+        chargerEquipe();
+      } else {
+        const err = await res.json();
+        alert(`Erreur: ${err.error || 'Impossible de sauvegarder le membre.'}`);
+      }
+    }
+
+    async function modifierMembre(id) {
+      const res = await fetch(`/admin/team/${id}`, { headers: { 'Authorization': getAdminToken() } });
+      const m = await res.json();
+      document.getElementById('team-id').value = m.id;
+      document.getElementById('team-image-url').value = m.image;
+      document.getElementById('team-nom').value = m.nom;
+      document.getElementById('team-role').value = m.role;
+      document.getElementById('team-description').value = m.description;
+      // On ne peut pas pré-remplir un input file
+      document.getElementById('team-submit-btn').textContent = 'Mettre à jour';
+      document.getElementById('team-cancel-btn').classList.remove('hidden');
+    }
+
+    function annulerModificationEquipe() {
+      document.getElementById('team-form').reset();
+      document.getElementById('team-id').value = '';
+      document.getElementById('team-submit-btn').textContent = 'Ajouter';
+      document.getElementById('team-image-url').value = '';
+      document.getElementById('team-cancel-btn').classList.add('hidden');
+    }
+
+    async function supprimerMembre(id) {
+      if (!confirm('Vraiment supprimer ce membre ?')) return;
+      try {
+        const res = await fetch(`/admin/team/${id}`, { 
+          method: 'DELETE', 
+          headers: { 'Authorization': getAdminToken(), 'Content-Type': 'application/json' } 
+        });
+        if (res.ok) {
+          chargerEquipe();
+        } else {
+          alert("Erreur lors de la suppression du membre.");
+        }
+      } catch (err) {
+        alert("Erreur réseau.");
+      }
+    }
+    document.getElementById('team-form').addEventListener('submit', sauvegarderMembre);
+
+    // --- Gestion des Témoignages ---
+    async function chargerTestimonials() {
+      const tbody = document.getElementById('testimonial-table');
+      try {
+        const res = await fetch('/admin/testimonials', { headers: { 'Authorization': getAdminToken() } });
+        if (res.status === 403) { window.location.href = 'admin-login.html'; return; }
+        pageState.testimonials.data = await res.json();
+        pageState.testimonials.currentPage = 1;
+        renderTestimonials();
+      } catch (err) {
+        tbody.innerHTML = '<tr><td colspan="5" class="p-3 text-center text-gray-500">Impossible de charger les témoignages.</td></tr>';
+      }
+    }
+    function renderTestimonials() {
+        const tbody = document.getElementById('testimonial-table');
+        const paginatedData = getPaginatedData('testimonials');
+        tbody.innerHTML = paginatedData.map((t) => `
+          <tr>
+            <td class="p-3">${t.name}</td>
+            <td class="p-3">${t.quote.substring(0, 50)}...</td>
+            <td class="p-3">${t.rating || 'N/A'} ★</td>
+            <td class="p-3">${t.category || 'N/A'}</td>
+            <td class="p-3">${t.status === 'approved' ? '<span class="text-green-400 font-bold">Approuvé</span>' : '<span class="text-yellow-400 font-bold">En attente</span>'}</td>
+            <td class="p-3 flex flex-col gap-2 items-start">
+              ${t.status === 'pending' ? `<button onclick="approuverTestimonial(${t.id})" class="bg-green-600 hover:bg-green-500 text-white px-3 py-1 rounded-md text-sm font-bold transition-colors">Approuver</button>` : ''}
+              <button onclick="modifierTestimonial(${t.id})" class="bg-white text-black px-3 py-1 rounded-md text-sm hover:bg-opacity-90 transition-colors font-bold">Modifier</button>
+              <button onclick="supprimerTestimonial(${t.id})" class="bg-white text-black px-3 py-1 rounded-md text-sm hover:bg-opacity-90 transition-colors font-bold">Supprimer</button>
+            </td>
+          </tr>
+        `).join('');
+        renderPaginationControls('testimonials', pageState.testimonials.data.length); // Correction: testimonials au lieu de testimonials
+    }
+    async function sauvegarderTestimonial(e) {
+      e.preventDefault();
+      const id = document.getElementById('testimonial-id').value;
+      const formData = new FormData();
+      formData.append('name', document.getElementById('testimonial-name').value);
+      formData.append('quote', document.getElementById('testimonial-quote').value);
+      formData.append('rating', document.getElementById('testimonial-rating').value);
+      formData.append('category', document.getElementById('testimonial-category').value);
+      formData.append('status', document.getElementById('testimonial-status').value);
+
+      const imageFile = document.getElementById('testimonial-image').files[0];
+      if (imageFile) {
+        formData.append('image', imageFile);
+      } else if (id) {
+        formData.append('image_url', document.getElementById('testimonial-image-url').value);
+      }
+
+      const method = id ? 'PUT' : 'POST';
+      const url = id ? `/admin/testimonials/${id}` : '/admin/testimonials';
+      const res = await fetch(url, { method, headers: { 'Authorization': getAdminToken() }, body: formData });
+
+      if (res.ok) {
+        annulerModificationTestimonial();
+        chargerTestimonials();
+      } else {
+        const err = await res.json();
+        alert(`Erreur: ${err.error || 'Impossible de sauvegarder le témoignage.'}`);
+      }
+    }
+
+    async function modifierTestimonial(id) {
+      const res = await fetch(`/admin/testimonials/${id}`, { headers: { 'Authorization': getAdminToken() } });
+      const t = await res.json();
+      document.getElementById('testimonial-id').value = t.id;
+      document.getElementById('testimonial-image-url').value = t.image;
+      document.getElementById('testimonial-name').value = t.name;
+      document.getElementById('testimonial-quote').value = t.quote;
+      document.getElementById('testimonial-category').value = t.category;
+      // On ne peut pas pré-remplir un input file
+      document.getElementById('testimonial-status').value = t.status;
+      document.getElementById('testimonial-rating').value = t.rating;
+      document.getElementById('testimonial-submit-btn').textContent = 'Mettre à jour';
+      document.getElementById('testimonial-cancel-btn').classList.remove('hidden');
+      document.getElementById('testimonial-form').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function annulerModificationTestimonial() {
+      document.getElementById('testimonial-form').reset();
+      document.getElementById('testimonial-id').value = '';
+      document.getElementById('testimonial-submit-btn').textContent = 'Ajouter le témoignage';
+      document.getElementById('testimonial-image-url').value = '';
+      document.getElementById('testimonial-cancel-btn').classList.add('hidden');
+      document.getElementById('testimonial-category').value = '';
+      document.getElementById('testimonial-status').value = 'approved';
+    }
+
+    async function supprimerTestimonial(id) {
+      if (!confirm('Vraiment supprimer ce témoignage ?')) return;
+      try {
+        const res = await fetch(`/admin/testimonials/${id}`, { 
+          method: 'DELETE', 
+          headers: { 'Authorization': getAdminToken(), 'Content-Type': 'application/json' } 
+        });
+        if (res.ok) {
+          chargerTestimonials();
+        } else {
+          alert("Erreur lors de la suppression du témoignage.");
+        }
+      } catch (err) {
+        alert("Erreur réseau.");
+      }
+    }
+
+    async function approuverTestimonial(id) {
+      const res = await fetch(`/admin/testimonials/${id}`, { headers: { 'Authorization': getAdminToken() } });
+      const testimonial = await res.json();
+      testimonial.status = 'approved';
+      const formData = new FormData();
+      for (const key in testimonial) { formData.append(key, testimonial[key]); }
+      await fetch(`/admin/testimonials/${id}`, {
+        method: 'PUT',
+        headers: { 'Authorization': getAdminToken() },
+        body: formData
+      });
+      chargerTestimonials();
+    }
+    document.getElementById('testimonial-form').addEventListener('submit', sauvegarderTestimonial);
+
+       // --- Gestion des Inscriptions à la Formation ---
+    async function chargerFormationRegistrations() {
+      try {
+        const res = await fetch('/admin/formation-inscriptions', { headers: { 'Authorization': getAdminToken() } });
+        if (res.status === 403) { window.location.href = 'admin-login.html'; return; }
+        pageState.formationRegistrations.data = await res.json();
+        pageState.formationRegistrations.currentPage = 1;
+        renderFormationRegistrations();
+      } catch (err) {
+        console.error("Erreur lors du chargement des inscriptions à la formation:", err);
+        document.getElementById('formation-registrations-table').innerHTML = '<tr><td colspan="6" class="p-3 text-center text-yellow-500">Impossible de charger les inscriptions.</td></tr>';
+      }
+    }
+
+    function renderFormationRegistrations() {
+      const tbody = document.getElementById('formation-registrations-table');
+      const paginatedData = getPaginatedData('formationRegistrations');
+
+      tbody.innerHTML = paginatedData.map(reg => `
+        <tr>
+          <td class="p-3">${reg.nom}</td>
+          <td class="p-3">${reg.email}</td>
+          <td class="p-3">${reg.telephone}</td>
+          <td class="p-3">${reg.formation}</td>
+          <td class="p-3">${new Date(reg.createdAt).toLocaleString()}</td>
+          <td class="p-3"><button onclick="supprimerFormationRegistration(${reg.id})" class="bg-white text-black px-3 py-1 rounded-md text-sm hover:bg-opacity-90 transition-colors font-bold">Supprimer</button></td>
+        </tr>
+      `).join('');
+
+      renderPaginationControls('formationRegistrations', pageState.formationRegistrations.data.length);
+    }
+
+    async function supprimerFormationRegistration(id) {
+      if (!confirm('Voulez-vous vraiment supprimer cette inscription ?')) return;
+      try {
+        const res = await fetch(`/admin/formation-inscriptions/${id}`, { 
+          method: 'DELETE', 
+          headers: { 'Authorization': getAdminToken(), 'Content-Type': 'application/json' } 
+        });
+        if (res.ok) {
+          chargerFormationRegistrations();
+        } else {
+          alert("Erreur lors de la suppression de l'inscription.");
+        }
+      } catch (err) {
+        alert("Erreur réseau.");
+      }
+    }
+
+
+
+    // --- GENERATION AUTOMATIQUE DU SITE STATIQUE ---
+    let generationTimeout;
+    async function generateStaticData() {
+      // Cette fonction est un placeholder pour une future fonctionnalité.
+      console.log("Déclenchement de la génération du site statique...");
+    }
+
+    async function initializeAdminPage() {
+      // S'assurer que le token existe avant de continuer
+      if (!localStorage.getItem('adminToken')) {
+        window.location.href = 'admin-login.html';
+        return;
+      }
+      // On charge toutes les sections en parallèle pour plus de rapidité
+      await Promise.all([
+        chargerBlog(),
+        chargerContacts(),
+        chargerAbonnes(),
+        chargerCommentaires(),
+        chargerCommandes(),
+        chargerReservations(),
+        chargerEquipe(),
+        chargerTestimonials(),
+                chargerFormationRegistrations()
+      ]);
+    }
+
+    // Initialisation
+    initializeAdminPage();
+ </script>
+</body>
+</html>

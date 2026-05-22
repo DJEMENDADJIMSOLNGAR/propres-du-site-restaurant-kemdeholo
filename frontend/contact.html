@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - KemdeHolo</title>    <link href="style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .contact-card {
+            transition: all 0.3s ease;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            color: white;
+        }
+        
+        .form-input {
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            border-color: #e5612f;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(229, 97, 47, 0.2);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+        }
+        
+        .map-container {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="font-sans">
+    <div id="header-placeholder"></div>
+
+    
+  
+    <!-- Contact Section -->
+  <section id="contact" class="py-16 scroll-reveal">
+    <div class="container mx-auto px-4">
+      <h2 class="text-4xl font-bold text-center text-black" data-translate-key="contact_page_title">Contactez-nous</h2>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-12">
+        <div>
+          <div class="bg-white rounded-lg shadow-lg p-8 h-full">
+            <h3 class="text-2xl font-bold mb-6 text-black">Informations de Contact</h3>
+            <div class="space-y-6" data-translate-key="information de contact">
+              <div class="flex items-start">
+                <div class="bg-black rounded-full p-3 mr-4 flex-shrink-0">
+                  <i class="fas fa-map-marker-alt text-white"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold text-lg mb-1 text-black">Adresse</h4>
+                  <p class="text-gray-600">Quartier djarabé2<br>Moundou, Tchad</p>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <div class="bg-black rounded-full p-3 mr-4 flex-shrink-0">
+                  <i class="fas fa-phone-alt text-white"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold text-lg mb-1 text-black">Téléphone</h4>
+                  <p class="text-gray-600">+235 66 26 43 51<br>Ouvert tous les jours de 8h à 22h</p>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <div class="bg-black rounded-full p-3 mr-4 flex-shrink-0">
+                  <i class="fas fa-envelope text-white"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold text-lg mb-1 text-black">Email</h4>
+                  <p class="text-gray-600">kemdeholo2@gmail.com<br>Reservations: reservations@kemdeholo.td</p>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <div class="bg-black rounded-full p-3 mr-4 flex-shrink-0">
+                  <i class="fas fa-clock text-white"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold text-lg mb-1 text-black">Horaires</h4>
+                  <p class="text-gray-600">Lundi - Dimanche: 8h - 22h<br>Service continu</p>
+                </div>
+              </div>
+            </div>
+            <div class="mt-8">
+              <h4 class="font-bold text-lg mb-4 text-primary-blue">Suivez-nous</h4>
+              <div class="flex space-x-4">
+                <a href="https://www.facebook.com/kemdeholo" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="text-gray-500 hover:text-primary-blue social-icon">
+                  <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://www.instagram.com/kemdeholo" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="text-gray-500 hover:text-primary-blue social-icon">
+                  <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.tripadvisor.com/Profile/kemdeholo" target="_blank" rel="noopener noreferrer" aria-label="TripAdvisor" class="text-gray-500 hover:text-primary-blue social-icon">
+                  <i class="fab fa-tripadvisor"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="bg-white rounded-lg shadow-lg p-8 h-full">
+            <h3 class="text-2xl font-bold mb-6 text-black">Envoyez-nous un message</h3>
+            <form id="contact-form" class="space-y-4" data-translate-key="Envoyez nous un message">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="relative">
+                  <label for="prenom" class="block text-gray-700 text-sm font-medium mb-1">Prénom</label> 
+                  <input id="prenom" type="text" placeholder="Votre prénom" data-translate-key="prenom" required class="form-input" autocomplete="given-name">
+                  <span id="prenom-error" class="error-message"></span>
+                </div>
+                <div class="relative">
+                  <label for="nom" class="block text-gray-700 text-sm font-medium mb-1">Nom</label> 
+                  <input id="nom" type="text" placeholder="Votre nom" data-translate-key="Nom"  required class="form-input" autocomplete="family-name">
+                  <span id="nom-error" class="error-message"></span>
+                </div>
+              </div>
+              <div class="relative">
+                <label for="email" class="block text-gray-700 text-sm font-medium mb-1">Email</label> 
+                <input id="email" type="email" placeholder="Votre email" data-translate-key="Email"  required class="form-input" autocomplete="email">
+                <span id="email-error" class="error-message"></span>
+              </div>
+              <div class="relative">
+                <label for="sujet" class="block text-gray-700 text-sm font-medium mb-1">Sujet</label>
+                <select id="sujet" data-translate-key="Sujet" class="form-input" required>
+                  <option value="" data-translate-key="Sélectionnez un sujet">Sélectionnez un sujet</option>
+                  <option value="reservation" data-translate-key="Réservation">Réservation</option>
+                  <option value="event" data-translate-key="Événement privé">Événement privé</option>
+                  <option value="formation" data-translate-key="Formation culinaire">Formation culinaire</option>
+                  <option value="other" data-translate-key="Autre demande">Autre demande</option>
+                </select>
+                <span id="sujet-error" class="error-message"></span>
+              </div>
+              <div id="other-subject-details-container" class="relative hidden">
+                <label for="other-subject-details" class="block text-gray-700 text-sm font-medium mb-1">Précisez votre demande</label>
+                <textarea id="other-subject-details" rows="2" placeholder="Ex: Demande de partenariat, suggestion..." class="form-input"></textarea>
+                <span id="other-subject-details-error" class="error-message"></span>
+              </div>
+              <div class="relative">
+                <label for="message" class="block text-gray-700 text-sm font-medium mb-1">Message</label> 
+                <textarea id="message" rows="4" placeholder="Votre message" data-translate-key="Votre message"  required class="form-input"></textarea>
+                <span id="message-error" class="error-message"></span>
+              </div>
+              <button type="submit" class="w-full btn-primary flex items-center justify-center h-12">
+                <span class="button-text">Envoyer le Message</span>
+                <span class="button-loader"></span>
+              </button>
+              <div id="contact-error" class="text-red-600 font-bold mt-4"></div>
+            </form>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+    <footer id="main-footer"></footer>
+    <script src="main.js"></script>
+    <script src="translations.js"></script>
+    <script src="language.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('contact-form');
+            const prenomInput = document.getElementById('prenom');
+            const nomInput = document.getElementById('nom');
+            const emailInput = document.getElementById('email');
+            const sujetSelect = document.getElementById('sujet');
+            const otherSubjectDetailsContainer = document.getElementById('other-subject-details-container');
+            const otherSubjectDetailsInput = document.getElementById('other-subject-details');
+            const messageInput = document.getElementById('message');
+
+            const prenomError = document.getElementById('prenom-error');
+            const nomError = document.getElementById('nom-error');
+            const emailError = document.getElementById('email-error');
+            const sujetError = document.getElementById('sujet-error');
+            const otherSubjectDetailsError = document.getElementById('other-subject-details-error');
+            const messageError = document.getElementById('message-error');
+
+            const errorDiv = document.getElementById('contact-error');
+
+            // Validation function
+            const validateField = (input, errorSpan, errorMessage) => {
+                if (!input.value.trim()) {
+                    input.classList.add('error');
+                    errorSpan.textContent = errorMessage;
+                    errorSpan.classList.add('active');
+                    return false;
+                } else {
+                    input.classList.remove('error');
+                    errorSpan.textContent = '';
+                    errorSpan.classList.remove('active');
+                    return true;
+                }
+            };
+
+            const validateEmail = (input, errorSpan) => {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!input.value.trim()) {
+                    input.classList.add('error');
+                    errorSpan.textContent = 'L\'email est requis.';
+                    errorSpan.classList.add('active');
+                    return false;
+                } else if (!emailRegex.test(input.value.trim())) {
+                    input.classList.add('error');
+                    errorSpan.textContent = 'Veuillez entrer une adresse email valide.';
+                    errorSpan.classList.add('active');
+                    return false;
+                } else {
+                    input.classList.remove('error');
+                    errorSpan.textContent = '';
+                    errorSpan.classList.remove('active');
+                    return true;
+                }
+            };
+
+            // Event listener for form submission
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                // Reset previous errors
+                document.querySelectorAll('.error-message').forEach(span => {
+                    span.textContent = '';
+                    span.classList.remove('active');
+                });
+                document.querySelectorAll('.form-input').forEach(input => input.classList.remove('error'));
+                errorDiv.textContent = ''; // Clear general error message
+                errorDiv.className = 'text-red-600 font-bold mt-4'; // Reset class for potential error
+
+                let isValid = true;
+
+                isValid = validateField(prenomInput, prenomError, 'Le prénom est requis.') && isValid;
+                isValid = validateField(nomInput, nomError, 'Le nom est requis.') && isValid;
+                isValid = validateEmail(emailInput, emailError) && isValid;
+                isValid = validateField(sujetSelect, sujetError, 'Veuillez sélectionner un sujet.') && isValid;
+                isValid = validateField(messageInput, messageError, 'Le message est requis.') && isValid;
+
+                if (sujetSelect.value === 'other') {
+                    isValid = validateField(otherSubjectDetailsInput, otherSubjectDetailsError, 'Veuillez préciser votre demande.') && isValid;
+                }
+
+                if (!isValid) {
+                    errorDiv.textContent = 'Veuillez corriger les erreurs dans le formulaire.';
+                    return;
+                }
+
+                const prenom = prenomInput.value;
+                const submitButton = form.querySelector('button[type="submit"]');
+                const nom = nomInput.value;
+                const email = emailInput.value;
+                const sujet = sujetSelect.value;
+                const otherDetails = sujet === 'other' ? otherSubjectDetailsInput.value : '';
+                const message = messageInput.value;
+
+                try {                    
+                    submitButton.disabled = true;
+                    submitButton.classList.add('loading');
+
+                    const res = await fetch('/contact', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ prenom, nom, email, sujet, otherDetails, message })
+                    });
+                    const data = await res.json();
+                    if (!res.ok) {
+                        errorDiv.textContent = data.error || data.message || 'Erreur lors de l\'envoi.';
+                    } else {
+                        errorDiv.textContent = data.message || 'Votre message a été envoyé avec succès !';
+                        errorDiv.className = 'text-green-600 font-bold mt-4'; // Success styling
+                        form.reset();
+                        otherSubjectDetailsContainer.classList.add('hidden'); // Hide conditional field on success
+                        localStorage.setItem('refreshAdminData', 'contacts_' + Date.now()); // Signal admin page
+                        setTimeout(() => { errorDiv.textContent = ''; errorDiv.className = 'text-red-600 font-bold mt-4'; }, 5000); // Clear message after 5s
+                    }
+                } catch (err) {
+                    errorDiv.textContent = 'Erreur réseau ou serveur injoignable.';
+                } finally {
+                    submitButton.disabled = false;
+                    submitButton.classList.remove('loading');
+                }
+            });
+
+            // Real-time validation and conditional field logic
+            const setupRealtimeValidation = (input, errorSpan, validationFn, errorMessage) => {
+                input.addEventListener('input', () => validationFn(input, errorSpan, errorMessage));
+                input.addEventListener('blur', () => validationFn(input, errorSpan, errorMessage)); // Also validate on blur
+            };
+
+            setupRealtimeValidation(prenomInput, prenomError, (input, span) => validateField(input, span, 'Le prénom est requis.'), 'Le prénom est requis.');
+            setupRealtimeValidation(nomInput, nomError, (input, span) => validateField(input, span, 'Le nom est requis.'), 'Le nom est requis.');
+            setupRealtimeValidation(emailInput, emailError, validateEmail);
+            setupRealtimeValidation(messageInput, messageError, (input, span) => validateField(input, span, 'Le message est requis.'), 'Le message est requis.');
+
+            sujetSelect.addEventListener('change', () => {
+                if (sujetSelect.value === 'other') {
+                    otherSubjectDetailsContainer.classList.remove('hidden');
+                    otherSubjectDetailsInput.setAttribute('required', 'true');
+                    setupRealtimeValidation(otherSubjectDetailsInput, otherSubjectDetailsError, (input, span) => validateField(input, span, 'Veuillez préciser votre demande.'), 'Veuillez préciser votre demande.');
+                } else {
+                    otherSubjectDetailsContainer.classList.add('hidden');
+                    otherSubjectDetailsInput.removeAttribute('required');
+                    otherSubjectDetailsInput.value = ''; // Clear value when hidden
+                    otherSubjectDetailsInput.classList.remove('error');
+                    otherSubjectDetailsError.textContent = '';
+                    otherSubjectDetailsError.classList.remove('active');
+                }
+                // Clear subject error if a valid option is selected
+                if (sujetSelect.value !== '') {
+                    sujetSelect.classList.remove('error');
+                    sujetError.textContent = '';
+                    sujetError.classList.remove('active');
+                } else {
+                    validateField(sujetSelect, sujetError, 'Veuillez sélectionner un sujet.');
+                }
+            });
+
+            // Initial check for conditional field in case of pre-filled form or back button
+            if (sujetSelect.value === 'other') {
+                otherSubjectDetailsContainer.classList.remove('hidden');
+                otherSubjectDetailsInput.setAttribute('required', 'true');
+            }
+        });
+    </script>
+</body>
+</html>

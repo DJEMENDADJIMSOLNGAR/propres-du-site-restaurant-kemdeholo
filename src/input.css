@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary-blue text-white font-bold py-2 px-4 rounded-full shadow-md;
+    @apply transition-all duration-300 ease-in-out;
+  }
+  .btn-primary:hover {
+    @apply bg-blue-800 shadow-lg -translate-y-px;
+  }
+}

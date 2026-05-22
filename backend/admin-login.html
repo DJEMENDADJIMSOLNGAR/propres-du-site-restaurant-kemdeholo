@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connexion Admin - KemdeHolo</title> 
+  <link rel="stylesheet" href="../frontend/style.css">
+  <style>
+    body{font-family:'Inter',sans-serif;background-color:#000000;}
+  </style>
+</head>
+<body class="flex items-center justify-center min-h-screen bg-black">
+  <form id="login-form" class="bg-gray-900 p-8 rounded-lg shadow-lg max-w-sm w-full">
+    <h1 class="text-2xl font-bold mb-6 text-white">Connexion Admin</h1>
+    <input id="username" type="text" placeholder="Nom d'utilisateur" required class="w-full mb-4 px-4 py-2 rounded bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500">
+    <input id="password" type="password" placeholder="Mot de passe" required class="w-full mb-4 px-4 py-2 rounded bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500">
+    <button type="submit" class="w-full bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 rounded transition-colors">Se connecter</button>
+    <div id="login-error" class="text-yellow-400 font-bold mt-4"></div>
+  </form>
+  <script>
+    document.getElementById('login-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const errorDiv = document.getElementById('login-error');
+      errorDiv.textContent = '';
+      const res = await fetch('/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        localStorage.setItem('adminToken', data.token);
+        window.location.href = 'admin.html';
+      } else {
+        errorDiv.textContent = data.error || 'Identifiants invalides';
+      }
+    });
+  </script>
+</body>
+</html>
