@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "script.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+      "start": "node backend/app.js",
+      "test": "echo \"Error: no test specified\" && exit 1",
     "build:css": "tailwindcss -i ./src/input.css -o ./frontend/css/style.css --watch",
     "build:prod": "tailwindcss -i ./src/input.css -o ./frontend/css/style.css --minify"
   },
@@ -32,4 +33,6 @@
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
   }
+
+
 }
